@@ -1,0 +1,508 @@
+<div class="prediction-page">
+  <header class="page-header">
+    <div class="header-titles">
+      <h1>Sensory Quality Prediction</h1>
+      <p class="subtitle">
+        Input laboratory enological measurements to compute real-time sensory rating estimates.
+      </p>
+    </div>
+
+    <div class="header-actions">
+      <app-button
+        variant="outline"
+        size="sm"
+        type="button"
+        (btnClick)="loadBaselineValues()"
+        title="Populate dataset median baseline values"
+      >
+        Load Median Baseline
+      </app-button>
+      <app-button
+        variant="ghost"
+        size="sm"
+        type="button"
+        (btnClick)="resetForm()"
+        title="Reset form and clear prediction results"
+      >
+        Reset Form
+      </app-button>
+    </div>
+  </header>
+
+
+
+  <!-- Offline Notice if Backend is Not Running -->
+  <app-alert
+    *ngIf="backendStatus === 'disconnected'"
+    type="warning"
+    title="FastAPI Prediction Service Offline"
+    [message]="offlineNoticeMessage"
+  ></app-alert>
+
+  <!-- Error Alert if Prediction Fails or Validation Fails -->
+  <app-alert
+    *ngIf="errorMessage"
+    type="error"
+    title="Prediction Evaluation Error"
+    [message]="errorMessage"
+    [dismissible]="true"
+    (dismissed)="clearErrors()"
+  >
+    <ul *ngIf="validationErrors.length > 0" class="validation-error-list">
+      <li *ngFor="let err of validationErrors">{{ err }}</li>
+    </ul>
+  </app-alert>
+
+  <div class="prediction-layout">
+    <!-- Input Form Column -->
+    <div class="form-column">
+      <app-card
+        headerTitle="11 Physicochemical Attributes"
+        subtitle="Validated against defensible enological chemistry bounds"
+      >
+        <form [formGroup]="predictionForm" (ngSubmit)="onSubmit()" class="features-form" novalidate>
+          <!-- Cross-field SO2 Error Alert -->
+          <div
+            *ngIf="hasSulfurDioxideError"
+            class="field-error-banner"
+            role="alert"
+          >
+            <strong>Inconsistent Chemistry:</strong> Free SO₂ ({{ predictionForm.get('free_sulfur_dioxide')?.value }} mg/dm³) cannot exceed Total SO₂ ({{ predictionForm.get('total_sulfur_dioxide')?.value }} mg/dm³).
+          </div>
+
+          <!-- Section 1: Acidity & pH Balance -->
+          <div class="form-section">
+            <h4 class="section-title">1. Acidity & pH Balance</h4>
+            <div class="fields-grid">
+              <!-- Fixed Acidity -->
+              <div class="form-group" [class.has-error]="isFieldInvalid('fixed_acidity')">
+                <label for="fixed_acidity">
+                  Fixed Acidity <span class="unit">(g/dm³)</span>
+                </label>
+                <input
+                  id="fixed_acidity"
+                  type="number"
+                  step="0.1"
+                  min="3.0"
+                  max="25.0"
+                  formControlName="fixed_acidity"
+                  [class.input-invalid]="isFieldInvalid('fixed_acidity')"
+                  [attr.aria-invalid]="isFieldInvalid('fixed_acidity')"
+                  aria-describedby="fixed_acidity_hint fixed_acidity_error"
+                  required
+                />
+                <span id="fixed_acidity_hint" class="field-hint">Range: 3.0 – 25.0 (Tartaric)</span>
+                <span
+                  id="fixed_acidity_error"
+                  *ngIf="isFieldInvalid('fixed_acidity')"
+                  class="field-error-msg"
+                  role="alert"
+                >
+                  {{ getFieldErrorMessage('fixed_acidity', 'Fixed acidity', 3.0, 25.0, 'g/dm³') }}
+                </span>
+              </div>
+
+              <!-- Volatile Acidity -->
+              <div class="form-group" [class.has-error]="isFieldInvalid('volatile_acidity')">
+                <label for="volatile_acidity">
+                  Volatile Acidity <span class="unit">(g/dm³)</span>
+                </label>
+                <input
+                  id="volatile_acidity"
+                  type="number"
+                  step="0.01"
+                  min="0.05"
+                  max="3.0"
+                  formControlName="volatile_acidity"
+                  [class.input-invalid]="isFieldInvalid('volatile_acidity')"
+                  [attr.aria-invalid]="isFieldInvalid('volatile_acidity')"
+                  aria-describedby="volatile_acidity_hint volatile_acidity_error"
+                  required
+                />
+                <span id="volatile_acidity_hint" class="field-hint">Range: 0.05 – 3.00 (Acetic)</span>
+                <span
+                  id="volatile_acidity_error"
+                  *ngIf="isFieldInvalid('volatile_acidity')"
+                  class="field-error-msg"
+                  role="alert"
+                >
+                  {{ getFieldErrorMessage('volatile_acidity', 'Volatile acidity', 0.05, 3.0, 'g/dm³') }}
+                </span>
+              </div>
+
+              <!-- Citric Acid -->
+              <div class="form-group" [class.has-error]="isFieldInvalid('citric_acid')">
+                <label for="citric_acid">
+                  Citric Acid <span class="unit">(g/dm³)</span>
+                </label>
+                <input
+                  id="citric_acid"
+                  type="number"
+                  step="0.01"
+                  min="0.0"
+                  max="2.0"
+                  formControlName="citric_acid"
+                  [class.input-invalid]="isFieldInvalid('citric_acid')"
+                  [attr.aria-invalid]="isFieldInvalid('citric_acid')"
+                  aria-describedby="citric_acid_hint citric_acid_error"
+                  required
+                />
+                <span id="citric_acid_hint" class="field-hint">Range: 0.00 – 2.00 (Freshness)</span>
+                <span
+                  id="citric_acid_error"
+                  *ngIf="isFieldInvalid('citric_acid')"
+                  class="field-error-msg"
+                  role="alert"
+                >
+                  {{ getFieldErrorMessage('citric_acid', 'Citric acid', 0.0, 2.0, 'g/dm³') }}
+                </span>
+              </div>
+
+              <!-- pH -->
+              <div class="form-group" [class.has-error]="isFieldInvalid('ph')">
+                <label for="ph">
+                  pH <span class="unit">(Acidity Scale)</span>
+                </label>
+                <input
+                  id="ph"
+                  type="number"
+                  step="0.01"
+                  min="2.5"
+                  max="4.5"
+                  formControlName="ph"
+                  [class.input-invalid]="isFieldInvalid('ph')"
+                  [attr.aria-invalid]="isFieldInvalid('ph')"
+                  aria-describedby="ph_hint ph_error"
+                  required
+                />
+                <span id="ph_hint" class="field-hint">Range: 2.50 – 4.50</span>
+                <span
+                  id="ph_error"
+                  *ngIf="isFieldInvalid('ph')"
+                  class="field-error-msg"
+                  role="alert"
+                >
+                  {{ getFieldErrorMessage('ph', 'pH', 2.5, 4.5, '') }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Body, Sugar & Fermentation -->
+          <div class="form-section">
+            <h4 class="section-title">2. Fermentation & Body Density</h4>
+            <div class="fields-grid">
+              <!-- Residual Sugar -->
+              <div class="form-group" [class.has-error]="isFieldInvalid('residual_sugar')">
+                <label for="residual_sugar">
+                  Residual Sugar <span class="unit">(g/dm³)</span>
+                </label>
+                <input
+                  id="residual_sugar"
+                  type="number"
+                  step="0.1"
+                  min="0.5"
+                  max="100.0"
+                  formControlName="residual_sugar"
+                  [class.input-invalid]="isFieldInvalid('residual_sugar')"
+                  [attr.aria-invalid]="isFieldInvalid('residual_sugar')"
+                  aria-describedby="residual_sugar_hint residual_sugar_error"
+                  required
+                />
+                <span id="residual_sugar_hint" class="field-hint">Range: 0.5 – 100.0</span>
+                <span
+                  id="residual_sugar_error"
+                  *ngIf="isFieldInvalid('residual_sugar')"
+                  class="field-error-msg"
+                  role="alert"
+                >
+                  {{ getFieldErrorMessage('residual_sugar', 'Residual sugar', 0.5, 100.0, 'g/dm³') }}
+                </span>
+              </div>
+
+              <!-- Chlorides -->
+              <div class="form-group" [class.has-error]="isFieldInvalid('chlorides')">
+                <label for="chlorides">
+                  Chlorides <span class="unit">(g/dm³)</span>
+                </label>
+                <input
+                  id="chlorides"
+                  type="number"
+                  step="0.001"
+                  min="0.005"
+                  max="1.0"
+                  formControlName="chlorides"
+                  [class.input-invalid]="isFieldInvalid('chlorides')"
+                  [attr.aria-invalid]="isFieldInvalid('chlorides')"
+                  aria-describedby="chlorides_hint chlorides_error"
+                  required
+                />
+                <span id="chlorides_hint" class="field-hint">Range: 0.005 – 1.000 (NaCl)</span>
+                <span
+                  id="chlorides_error"
+                  *ngIf="isFieldInvalid('chlorides')"
+                  class="field-error-msg"
+                  role="alert"
+                >
+                  {{ getFieldErrorMessage('chlorides', 'Chlorides', 0.005, 1.0, 'g/dm³') }}
+                </span>
+              </div>
+
+              <!-- Density -->
+              <div class="form-group" [class.has-error]="isFieldInvalid('density')">
+                <label for="density">
+                  Density <span class="unit">(g/cm³)</span>
+                </label>
+                <input
+                  id="density"
+                  type="number"
+                  step="0.0001"
+                  min="0.9800"
+                  max="1.0400"
+                  formControlName="density"
+                  [class.input-invalid]="isFieldInvalid('density')"
+                  [attr.aria-invalid]="isFieldInvalid('density')"
+                  aria-describedby="density_hint density_error"
+                  required
+                />
+                <span id="density_hint" class="field-hint">Range: 0.9800 – 1.0400</span>
+                <span
+                  id="density_error"
+                  *ngIf="isFieldInvalid('density')"
+                  class="field-error-msg"
+                  role="alert"
+                >
+                  {{ getFieldErrorMessage('density', 'Density', 0.9800, 1.0400, 'g/cm³') }}
+                </span>
+              </div>
+
+              <!-- Alcohol -->
+              <div class="form-group" [class.has-error]="isFieldInvalid('alcohol')">
+                <label for="alcohol">
+                  Alcohol <span class="unit">(% vol)</span>
+                </label>
+                <input
+                  id="alcohol"
+                  type="number"
+                  step="0.1"
+                  min="6.0"
+                  max="20.0"
+                  formControlName="alcohol"
+                  [class.input-invalid]="isFieldInvalid('alcohol')"
+                  [attr.aria-invalid]="isFieldInvalid('alcohol')"
+                  aria-describedby="alcohol_hint alcohol_error"
+                  required
+                />
+                <span id="alcohol_hint" class="field-hint">Range: 6.0 – 20.0 %</span>
+                <span
+                  id="alcohol_error"
+                  *ngIf="isFieldInvalid('alcohol')"
+                  class="field-error-msg"
+                  role="alert"
+                >
+                  {{ getFieldErrorMessage('alcohol', 'Alcohol', 6.0, 20.0, '%') }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Preservatives & Mineral Salts -->
+          <div class="form-section">
+            <h4 class="section-title">3. Preservation & Mineral Balance</h4>
+            <div class="fields-grid">
+              <!-- Free Sulfur Dioxide -->
+              <div class="form-group" [class.has-error]="isFieldInvalid('free_sulfur_dioxide')">
+                <label for="free_sulfur_dioxide">
+                  Free Sulfur Dioxide <span class="unit">(mg/dm³)</span>
+                </label>
+                <input
+                  id="free_sulfur_dioxide"
+                  type="number"
+                  step="1"
+                  min="0"
+                  max="150"
+                  formControlName="free_sulfur_dioxide"
+                  [class.input-invalid]="isFieldInvalid('free_sulfur_dioxide')"
+                  [attr.aria-invalid]="isFieldInvalid('free_sulfur_dioxide')"
+                  aria-describedby="free_so2_hint free_so2_error"
+                  required
+                />
+                <span id="free_so2_hint" class="field-hint">Range: 0 – 150 mg/L</span>
+                <span
+                  id="free_so2_error"
+                  *ngIf="isFieldInvalid('free_sulfur_dioxide')"
+                  class="field-error-msg"
+                  role="alert"
+                >
+                  {{ getFieldErrorMessage('free_sulfur_dioxide', 'Free sulfur dioxide', 0, 150, 'mg/dm³') }}
+                </span>
+              </div>
+
+              <!-- Total Sulfur Dioxide -->
+              <div class="form-group" [class.has-error]="isFieldInvalid('total_sulfur_dioxide')">
+                <label for="total_sulfur_dioxide">
+                  Total Sulfur Dioxide <span class="unit">(mg/dm³)</span>
+                </label>
+                <input
+                  id="total_sulfur_dioxide"
+                  type="number"
+                  step="1"
+                  min="0"
+                  max="450"
+                  formControlName="total_sulfur_dioxide"
+                  [class.input-invalid]="isFieldInvalid('total_sulfur_dioxide')"
+                  [attr.aria-invalid]="isFieldInvalid('total_sulfur_dioxide')"
+                  aria-describedby="total_so2_hint total_so2_error"
+                  required
+                />
+                <span id="total_so2_hint" class="field-hint">Range: 0 – 450 mg/L (Must ≥ Free SO₂)</span>
+                <span
+                  id="total_so2_error"
+                  *ngIf="isFieldInvalid('total_sulfur_dioxide')"
+                  class="field-error-msg"
+                  role="alert"
+                >
+                  {{ getFieldErrorMessage('total_sulfur_dioxide', 'Total sulfur dioxide', 0, 450, 'mg/dm³') }}
+                </span>
+              </div>
+
+              <!-- Sulphates -->
+              <div class="form-group" [class.has-error]="isFieldInvalid('sulphates')">
+                <label for="sulphates">
+                  Sulphates <span class="unit">(g/dm³)</span>
+                </label>
+                <input
+                  id="sulphates"
+                  type="number"
+                  step="0.01"
+                  min="0.1"
+                  max="3.0"
+                  formControlName="sulphates"
+                  [class.input-invalid]="isFieldInvalid('sulphates')"
+                  [attr.aria-invalid]="isFieldInvalid('sulphates')"
+                  aria-describedby="sulphates_hint sulphates_error"
+                  required
+                />
+                <span id="sulphates_hint" class="field-hint">Range: 0.10 – 3.00 (K₂SO₄)</span>
+                <span
+                  id="sulphates_error"
+                  *ngIf="isFieldInvalid('sulphates')"
+                  class="field-error-msg"
+                  role="alert"
+                >
+                  {{ getFieldErrorMessage('sulphates', 'Sulphates', 0.1, 3.0, 'g/dm³') }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="form-actions">
+            <app-button
+              id="submit-prediction-btn"
+              variant="primary"
+              size="lg"
+              type="submit"
+              [loading]="isLoading"
+              [disabled]="predictionForm.invalid || isLoading"
+              (btnClick)="onSubmit()"
+            >
+              Predict Wine Quality
+            </app-button>
+
+            <app-button
+              id="reset-form-btn"
+              variant="ghost"
+              size="md"
+              type="button"
+              [disabled]="isLoading"
+              (btnClick)="resetForm()"
+            >
+              Reset Form
+            </app-button>
+          </div>
+        </form>
+      </app-card>
+    </div>
+
+    <!-- Prediction Result Column -->
+    <div class="result-column">
+      <!-- Loading State -->
+      <app-card *ngIf="isLoading" [accentBorder]="true">
+        <app-loading-indicator
+          message="Evaluating physicochemical attributes through trained regression pipeline..."
+          size="md"
+          [fullPage]="false"
+        ></app-loading-indicator>
+      </app-card>
+
+      <!-- Result State -->
+      <app-card
+        *ngIf="!isLoading && predictionResult"
+        [accentBorder]="true"
+        headerTitle="Inference Result"
+        [subtitle]="predictionResult.model_type || predictionResult.model_name"
+      >
+        <div class="result-display">
+          <div class="score-circle">
+            <span class="score-num" aria-label="Predicted Quality Score">
+              {{ predictionResult.predicted_quality | number:'1.2-2' }}
+            </span>
+            <span class="score-scale">/ 10</span>
+          </div>
+
+          <div class="result-category">
+            <app-badge variant="wine" size="md">
+              {{ predictionResult.quality_category }}
+            </app-badge>
+          </div>
+
+          <div class="result-details">
+            <div class="detail-row">
+              <span class="detail-label">Predicted Score</span>
+              <span class="detail-value font-mono">{{ predictionResult.predicted_quality }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Rounded Grade</span>
+              <span class="detail-value">{{ predictionResult.rounded_quality }} of 10</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Serving Model</span>
+              <span class="detail-value">{{ predictionResult.model_type || predictionResult.model_name }}</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Status</span>
+              <span class="detail-value status-success">{{ predictionResult.status }}</span>
+            </div>
+            <div class="detail-row" *ngIf="lastLatencyMs !== null">
+              <span class="detail-label">Inference Latency</span>
+              <span class="detail-value">{{ lastLatencyMs }} ms</span>
+            </div>
+          </div>
+
+          <p class="result-message">{{ predictionResult.message }}</p>
+        </div>
+      </app-card>
+
+      <!-- Error State (when prediction request fails) -->
+      <app-card *ngIf="!isLoading && errorMessage && !predictionResult" [accentBorder]="true">
+        <app-empty-state
+          icon="wine"
+          title="Prediction Request Failed"
+          [description]="errorMessage"
+          actionText="Retry Prediction"
+          (actionClicked)="onSubmit()"
+        ></app-empty-state>
+      </app-card>
+
+      <!-- Empty State (No prediction yet, no error) -->
+      <app-card *ngIf="!isLoading && !predictionResult && !errorMessage">
+        <app-empty-state
+          icon="wine"
+          title="Awaiting Evaluation"
+          description="Adjust the 11 chemical properties on the left and click 'Predict Wine Quality' to run real-time regression inference."
+        ></app-empty-state>
+      </app-card>
+    </div>
+  </div>
+</div>

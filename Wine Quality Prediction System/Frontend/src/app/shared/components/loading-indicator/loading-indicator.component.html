@@ -1,0 +1,6 @@
+<div class="loading-wrapper" [class.full-page]="fullPage">
+  <div class="wine-spinner" [class]="'spinner-' + size" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  <p *ngIf="message" class="loading-text">{{ message }}</p>
+</div>

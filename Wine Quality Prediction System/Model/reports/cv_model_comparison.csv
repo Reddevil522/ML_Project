@@ -1,0 +1,4 @@
+algorithm,cv_mae_mean,cv_mae_std,cv_rmse_mean,cv_rmse_std,cv_r2_mean,cv_r2_std,avg_fit_time_seconds,selected_as_winner
+LinearRegression,0.5057,0.0178,0.6618,0.0136,0.3226,0.0311,0.0739,False
+DecisionTreeRegressor,0.4777,0.0303,0.8076,0.047,-0.0065,0.0607,0.03,False
+RandomForestRegressor,0.4319,0.0203,0.6008,0.0259,0.442,0.0361,0.8492,True

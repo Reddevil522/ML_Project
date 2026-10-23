@@ -1,0 +1,104 @@
+{
+  "LinearRegression": {
+    "algorithm": "LinearRegression",
+    "cv_mae_mean": 0.5057,
+    "cv_mae_std": 0.0178,
+    "cv_rmse_mean": 0.6618,
+    "cv_rmse_std": 0.0136,
+    "cv_mse_mean": 0.4381,
+    "cv_mse_std": 0.0181,
+    "cv_r2_mean": 0.3226,
+    "cv_r2_std": 0.0311,
+    "avg_fit_time_seconds": 0.0739,
+    "avg_score_time_seconds": 0.0117,
+    "fold_mae_scores": [
+      0.4832,
+      0.4905,
+      0.5172,
+      0.5052,
+      0.5325
+    ],
+    "fold_rmse_scores": [
+      0.6492,
+      0.6459,
+      0.6836,
+      0.6625,
+      0.6676
+    ],
+    "fold_r2_scores": [
+      0.2677,
+      0.3514,
+      0.3135,
+      0.3521,
+      0.3285
+    ]
+  },
+  "DecisionTreeRegressor": {
+    "algorithm": "DecisionTreeRegressor",
+    "cv_mae_mean": 0.4777,
+    "cv_mae_std": 0.0303,
+    "cv_rmse_mean": 0.8076,
+    "cv_rmse_std": 0.047,
+    "cv_mse_mean": 0.6544,
+    "cv_mse_std": 0.0738,
+    "cv_r2_mean": -0.0065,
+    "cv_r2_std": 0.0607,
+    "avg_fit_time_seconds": 0.03,
+    "avg_score_time_seconds": 0.0091,
+    "fold_mae_scores": [
+      0.4258,
+      0.4648,
+      0.5,
+      0.5117,
+      0.4863
+    ],
+    "fold_rmse_scores": [
+      0.7208,
+      0.8125,
+      0.8432,
+      0.8547,
+      0.8068
+    ],
+    "fold_r2_scores": [
+      0.0973,
+      -0.0264,
+      -0.0443,
+      -0.0782,
+      0.0193
+    ]
+  },
+  "RandomForestRegressor": {
+    "algorithm": "RandomForestRegressor",
+    "cv_mae_mean": 0.4319,
+    "cv_mae_std": 0.0203,
+    "cv_rmse_mean": 0.6008,
+    "cv_rmse_std": 0.0259,
+    "cv_mse_mean": 0.3616,
+    "cv_mse_std": 0.0314,
+    "cv_r2_mean": 0.442,
+    "cv_r2_std": 0.0361,
+    "avg_fit_time_seconds": 0.8492,
+    "avg_score_time_seconds": 0.1789,
+    "fold_mae_scores": [
+      0.4096,
+      0.4101,
+      0.4477,
+      0.4315,
+      0.4607
+    ],
+    "fold_rmse_scores": [
+      0.5762,
+      0.5736,
+      0.6398,
+      0.5927,
+      0.6214
+    ],
+    "fold_r2_scores": [
+      0.4231,
+      0.4884,
+      0.3987,
+      0.4815,
+      0.4183
+    ]
+  }
+}

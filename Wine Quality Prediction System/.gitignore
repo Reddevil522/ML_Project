@@ -1,0 +1,87 @@
+# ==========================================
+# Git Ignore for Wine Quality Prediction System
+# ==========================================
+
+# Python Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-compiled / optimized files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# C-extensions and distribution / packaging
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Unit tests and coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+*.py,cover
+
+# Jupyter Notebook Checkpoints
+.ipynb_checkpoints/
+*/.ipynb_checkpoints/*
+
+# Generated ML Models and Training Reports (keep directory structure tracked)
+ml-backend/models/*.joblib
+ml-backend/reports/*.png
+ml-backend/reports/*.json
+!ml-backend/models/.gitkeep
+!ml-backend/reports/.gitkeep
+
+# DO NOT ignore the source dataset (required by task specification)
+!ml-backend/data/winequality-red.csv
+!ml-backend/data/.gitkeep
+
+# Node & Angular Frontend
+wine-quality-ui/node_modules/
+wine-quality-ui/.angular/
+wine-quality-ui/dist/
+wine-quality-ui/tmp/
+wine-quality-ui/.sass-cache/
+wine-quality-ui/connect.lock
+wine-quality-ui/coverage/
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# IDE and Editor configuration
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+*.sublime-workspace
+*.sublime-project

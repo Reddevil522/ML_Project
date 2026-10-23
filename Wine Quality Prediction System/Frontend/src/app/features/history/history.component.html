@@ -1,0 +1,335 @@
+<div class="history-page">
+  <!-- Page Header -->
+  <header class="page-header">
+    <div class="header-text">
+      <div class="badge-row">
+        <app-badge variant="wine" size="md">Local Audit Log</app-badge>
+        <app-badge variant="neutral" size="md">Device-Specific</app-badge>
+      </div>
+      <h1>Inference History & Session Audit</h1>
+      <p class="subtitle">
+        Search, filter, inspect, and export continuous sensory quality predictions recorded on this browser.
+      </p>
+    </div>
+
+    <div class="header-actions">
+      <app-button
+        id="btn-export-csv"
+        variant="outline"
+        size="sm"
+        [disabled]="allRecords.length === 0"
+        (btnClick)="exportCsv()"
+      >
+        Export to CSV
+      </app-button>
+      <app-button
+        id="btn-clear-history"
+        variant="danger"
+        size="sm"
+        [disabled]="allRecords.length === 0"
+        (btnClick)="openClearConfirm()"
+      >
+        Clear All History
+      </app-button>
+    </div>
+  </header>
+
+  <!-- Educational Local Storage Notice -->
+  <section class="notice-section">
+    <app-alert
+      type="info"
+      title="Browser-Local Storage Notice"
+      message="Prediction evaluations are saved exclusively in this browser's localStorage for demonstration and review. This history is device-specific and is not stored in a shared server database. No secrets, credentials, or API keys are ever stored."
+    ></app-alert>
+  </section>
+
+  <!-- Search, Filter & Sort Toolbar (Visible if history exists) -->
+  <section *ngIf="allRecords.length > 0" class="toolbar-section" aria-label="Search and Filter Controls">
+    <div class="toolbar-card">
+      <!-- Search Input -->
+      <div class="search-box">
+        <label for="search-input" class="sr-only">Search records</label>
+        <span class="search-icon" aria-hidden="true">🔍</span>
+        <input
+          id="search-input"
+          type="text"
+          class="search-field"
+          placeholder="Search by ID, model, category, or score..."
+          [(ngModel)]="searchQuery"
+          (input)="applyFilters()"
+        />
+        <button
+          *ngIf="searchQuery"
+          type="button"
+          class="clear-search-btn"
+          (click)="clearSearch()"
+          title="Clear search"
+        >
+          ✕
+        </button>
+      </div>
+
+      <!-- Quality Category Filter -->
+      <div class="filter-box">
+        <label for="filter-category" class="filter-label">Category:</label>
+        <select
+          id="filter-category"
+          class="filter-select"
+          [(ngModel)]="selectedCategory"
+          (change)="applyFilters()"
+        >
+          <option value="ALL">All Categories</option>
+          <option value="Excellent / Premium">Excellent / Premium (≥ 7.0)</option>
+          <option value="Good Quality">Good Quality (6.0 – 6.9)</option>
+          <option value="Average / Standard">Average / Standard (5.0 – 5.9)</option>
+          <option value="Low / Deficient">Low / Deficient (&lt; 5.0)</option>
+        </select>
+      </div>
+
+      <!-- Sort Order Dropdown -->
+      <div class="filter-box">
+        <label for="sort-order" class="filter-label">Sort By:</label>
+        <select
+          id="sort-order"
+          class="filter-select"
+          [(ngModel)]="currentSort"
+          (change)="applyFilters()"
+        >
+          <option value="newest">Newest First</option>
+          <option value="oldest">Oldest First</option>
+          <option value="quality_desc">Quality: High to Low</option>
+          <option value="quality_asc">Quality: Low to High</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="results-count-bar">
+      <span class="count-text">
+        Showing <strong>{{ filteredRecords.length }}</strong> of <strong>{{ allRecords.length }}</strong> recorded evaluation(s)
+      </span>
+      <span *ngIf="filteredRecords.length !== allRecords.length" class="filtered-badge">
+        Filters Active
+      </span>
+    </div>
+  </section>
+
+  <!-- Completely Empty State (No records at all) -->
+  <section *ngIf="allRecords.length === 0" class="empty-state-section">
+    <app-card>
+      <app-empty-state
+        icon="history"
+        title="No Prediction History Found"
+        description="You haven't run any wine sensory predictions yet. Navigate to the Prediction Console to submit an 11-feature chemical profile."
+        actionText="Open Prediction Console"
+        (actionClicked)="navigateToPrediction()"
+      ></app-empty-state>
+    </app-card>
+  </section>
+
+  <!-- Filter Empty State (Records exist, but filter matched 0) -->
+  <section *ngIf="allRecords.length > 0 && filteredRecords.length === 0" class="empty-filter-section">
+    <app-card>
+      <app-empty-state
+        icon="history"
+        title="No Matching Records"
+        description="No stored predictions matched your current search query and category filters."
+        actionText="Reset Search & Filters"
+        (actionClicked)="resetFilters()"
+      ></app-empty-state>
+    </app-card>
+  </section>
+
+  <!-- Records Table -->
+  <section *ngIf="filteredRecords.length > 0" class="table-section">
+    <app-card [accentBorder]="true">
+      <div class="history-table-wrapper">
+        <table class="history-table" aria-label="Inference history log">
+          <thead>
+            <tr>
+              <th scope="col">Record ID & Time</th>
+              <th scope="col">Predicted Score</th>
+              <th scope="col">Sensory Category</th>
+              <th scope="col">Alcohol</th>
+              <th scope="col">Vol. Acidity</th>
+              <th scope="col">pH</th>
+              <th scope="col">Model</th>
+              <th scope="col">Latency</th>
+              <th scope="col" class="col-actions">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of filteredRecords; let i = index" class="history-row">
+              <td class="col-id-time">
+                <span class="record-id font-mono">{{ item.id }}</span>
+                <span class="record-time">{{ item.timestamp | date:'medium' }}</span>
+              </td>
+              <td class="col-score">
+                <div class="score-display">
+                  <strong class="score-number">{{ item.prediction.predicted_quality | number:'1.2-2' }}</strong>
+                  <span class="score-denominator">/ 10</span>
+                </div>
+              </td>
+              <td class="col-category">
+                <app-badge [variant]="getCategoryVariant(item.prediction.predicted_quality)" size="sm">
+                  {{ item.prediction.quality_category }}
+                </app-badge>
+              </td>
+              <td class="col-chem">{{ item.features.alcohol | number:'1.1-2' }}%</td>
+              <td class="col-chem">{{ item.features.volatile_acidity | number:'1.2-2' }} g/L</td>
+              <td class="col-chem">{{ (item.features.ph !== undefined ? item.features.ph : item.features.pH) | number:'1.2-2' }}</td>
+              <td class="col-model font-mono">{{ item.prediction.model_name || item.prediction.model_type }}</td>
+              <td class="col-latency text-muted">{{ item.latencyMs !== undefined ? item.latencyMs + ' ms' : '—' }}</td>
+              <td class="col-actions">
+                <div class="action-btn-group">
+                  <button
+                    type="button"
+                    class="inspect-btn"
+                    (click)="inspectRecord(item)"
+                    title="Inspect all 11 physicochemical inputs"
+                  >
+                    Inspect
+                  </button>
+                  <button
+                    type="button"
+                    class="delete-btn"
+                    (click)="deleteRecord(item.id)"
+                    title="Delete this record"
+                  >
+                    Delete
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </app-card>
+  </section>
+
+  <!-- Inspection Modal: View all 11 Input Features -->
+  <div *ngIf="selectedRecord" class="modal-backdrop" (click)="closeInspection()">
+    <div class="modal-card" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <header class="modal-header">
+        <div>
+          <div class="modal-badge-row">
+            <app-badge variant="wine" size="sm">Inspection Modal</app-badge>
+            <span class="modal-id font-mono">{{ selectedRecord.id }}</span>
+          </div>
+          <h2 id="modal-title" class="modal-title">Chemical Profile & Inference Details</h2>
+          <span class="modal-timestamp">Timestamp: {{ selectedRecord.timestamp | date:'medium' }}</span>
+        </div>
+        <button type="button" class="modal-close-btn" (click)="closeInspection()" aria-label="Close dialog">✕</button>
+      </header>
+
+      <div class="modal-body">
+        <!-- Prediction Summary Banner -->
+        <div class="prediction-highlight-card">
+          <div class="ph-score-box">
+            <span class="ph-label">Predicted Sensory Score</span>
+            <span class="ph-score-val text-wine">{{ selectedRecord.prediction.predicted_quality | number:'1.4-4' }}</span>
+            <span class="ph-rounded">Nearest Integer: {{ selectedRecord.prediction.rounded_quality }} / 10</span>
+          </div>
+          <div class="ph-meta-box">
+            <div class="ph-meta-item">
+              <span class="ph-meta-label">Sensory Classification:</span>
+              <app-badge [variant]="getCategoryVariant(selectedRecord.prediction.predicted_quality)" size="md">
+                {{ selectedRecord.prediction.quality_category }}
+              </app-badge>
+            </div>
+            <div class="ph-meta-item">
+              <span class="ph-meta-label">Serving Estimator:</span>
+              <span class="font-mono text-primary">{{ selectedRecord.prediction.model_name || selectedRecord.prediction.model_type }}</span>
+            </div>
+            <div class="ph-meta-item" *ngIf="selectedRecord.latencyMs">
+              <span class="ph-meta-label">Inference Latency:</span>
+              <span>{{ selectedRecord.latencyMs }} ms</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- All 11 Input Chemical Features -->
+        <div class="features-inspect-grid">
+          <h3 class="features-heading">All 11 Physicochemical Input Parameters:</h3>
+          <div class="parameters-grid">
+            <div class="param-card">
+              <span class="param-name">Fixed Acidity</span>
+              <span class="param-value text-wine">{{ selectedRecord.features.fixed_acidity }}</span>
+              <span class="param-unit">g(tartaric acid)/dm³</span>
+            </div>
+            <div class="param-card">
+              <span class="param-name">Volatile Acidity</span>
+              <span class="param-value text-wine">{{ selectedRecord.features.volatile_acidity }}</span>
+              <span class="param-unit">g(acetic acid)/dm³</span>
+            </div>
+            <div class="param-card">
+              <span class="param-name">Citric Acid</span>
+              <span class="param-value text-wine">{{ selectedRecord.features.citric_acid }}</span>
+              <span class="param-unit">g/dm³</span>
+            </div>
+            <div class="param-card">
+              <span class="param-name">Residual Sugar</span>
+              <span class="param-value">{{ selectedRecord.features.residual_sugar }}</span>
+              <span class="param-unit">g/dm³</span>
+            </div>
+            <div class="param-card">
+              <span class="param-name">Chlorides</span>
+              <span class="param-value">{{ selectedRecord.features.chlorides }}</span>
+              <span class="param-unit">g(NaCl)/dm³</span>
+            </div>
+            <div class="param-card">
+              <span class="param-name">Free Sulfur Dioxide</span>
+              <span class="param-value">{{ selectedRecord.features.free_sulfur_dioxide }}</span>
+              <span class="param-unit">mg/dm³</span>
+            </div>
+            <div class="param-card">
+              <span class="param-name">Total Sulfur Dioxide</span>
+              <span class="param-value">{{ selectedRecord.features.total_sulfur_dioxide }}</span>
+              <span class="param-unit">mg/dm³</span>
+            </div>
+            <div class="param-card">
+              <span class="param-name">Density</span>
+              <span class="param-value">{{ selectedRecord.features.density }}</span>
+              <span class="param-unit">g/cm³</span>
+            </div>
+            <div class="param-card">
+              <span class="param-name">pH Scale</span>
+              <span class="param-value">{{ selectedRecord.features.ph !== undefined ? selectedRecord.features.ph : selectedRecord.features.pH }}</span>
+              <span class="param-unit">[0 – 14]</span>
+            </div>
+            <div class="param-card">
+              <span class="param-name">Sulphates</span>
+              <span class="param-value">{{ selectedRecord.features.sulphates }}</span>
+              <span class="param-unit">g(K₂SO₄)/dm³</span>
+            </div>
+            <div class="param-card highlight-card">
+              <span class="param-name">Alcohol Content</span>
+              <span class="param-value text-wine">{{ selectedRecord.features.alcohol }}</span>
+              <span class="param-unit">% by volume</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <footer class="modal-footer">
+        <app-button variant="outline" size="sm" (btnClick)="closeInspection()">Close Details</app-button>
+        <app-button variant="danger" size="sm" (btnClick)="deleteSelectedRecord()">Delete Record</app-button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Clear All History Confirmation Modal -->
+  <div *ngIf="showClearConfirm" class="modal-backdrop" (click)="showClearConfirm = false">
+    <div class="confirm-dialog" (click)="$event.stopPropagation()" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title">
+      <span class="confirm-icon" aria-hidden="true">⚠️</span>
+      <h3 id="confirm-title" class="confirm-title">Clear Entire Prediction History?</h3>
+      <p class="confirm-desc">
+        This will permanently remove all {{ allRecords.length }} evaluation records from this browser's localStorage.
+        This action cannot be undone.
+      </p>
+      <div class="confirm-actions">
+        <app-button variant="outline" size="sm" (btnClick)="showClearConfirm = false">Cancel</app-button>
+        <app-button variant="danger" size="sm" (btnClick)="confirmClear()">Yes, Clear All History</app-button>
+      </div>
+    </div>
+  </div>
+</div>

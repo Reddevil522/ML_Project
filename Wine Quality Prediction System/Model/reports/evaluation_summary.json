@@ -1,0 +1,207 @@
+{
+  "evaluation_timestamp_utc": "2026-10-22T06:33:26.908753+00:00",
+  "model_artifact": "D:\\COLLAGE CLASSES\\SEM - 03\\Machine Learning\\Project\\wine-quality-prediction\\ml-backend\\models\\wine_quality_model.joblib",
+  "dataset_split": {
+    "total_samples": 1599,
+    "train_samples": 1279,
+    "test_samples": 320,
+    "test_ratio": 0.2,
+    "random_state": 42
+  },
+  "metrics": {
+    "mean_squared_error": 0.3007,
+    "root_mean_squared_error": 0.5483,
+    "mean_absolute_error": 0.422,
+    "r2_score": 0.5399,
+    "explained_variance_score": 0.5401,
+    "model_artifact": "wine_quality_model.joblib",
+    "test_samples": 320
+  },
+  "metric_interpretations": {
+    "mean_absolute_error": "Mean Absolute Error (MAE): Measures the average absolute discrepancy between predicted and true sensory ratings on the original 10-point scale. Unlike squared metrics, MAE treats all error magnitudes proportionally without over-penalizing outliers.",
+    "mean_squared_error": "Mean Squared Error (MSE): Averages the squared differences between predicted and actual values. Due to quadratic squaring, MSE heavily penalizes larger errors (e.g. predicting 4 for an 8).",
+    "root_mean_squared_error": "Root Mean Squared Error (RMSE): The square root of MSE, returning error penalties to the original sensory rating units. A larger gap between RMSE and MAE indicates higher variance and larger residual outliers.",
+    "r2_score": "Coefficient of Determination (R\u00b2): The proportion of total variance in sensory quality ratings accounted for by the 11 physicochemical predictors relative to a baseline mean predictor. Values range up to 1.0; a negative R\u00b2 indicates worse performance than predicting the training target mean.",
+    "explained_variance_score": "Explained Variance: Measures the proportion to which the model accounts for the variation of the target variable, independent of mean systematic offset/bias."
+  },
+  "residual_analysis": {
+    "mean_residual": 0.0119,
+    "std_residual": 0.5482,
+    "min_residual": -2.27,
+    "max_residual": 1.52,
+    "skewness": -0.277,
+    "kurtosis": 0.9058
+  },
+  "overfitting_and_limitations": {
+    "dataset_limitations": "1. Discrete Target Compression: True quality scores are integer sensory ratings concentrated at scores 5 and 6 (82.5% of dataset). Extreme ratings (3 and 8) have scant representation (10 and 18 samples), limiting tail-end statistical precision.\n2. Subjective Human Measurement: Sensory ratings reflect subjective taster assessments, which naturally carry inter-expert variance (~0.5 rating points), setting an enological noise floor below which error cannot be reduced without overfitting.\n3. Omitted Sensory Drivers: Important sensory compounds (anthocyanins, polyphenols, tannin extractability) are not measured in the 11 basic physicochemical features.",
+    "overfitting_diagnosis": "Decision trees fit on raw features overfit individual leaf partitions, whereas Random Forest averaging yields well-behaved generalization (Holdout MAE: 0.4220 vs 5-fold CV MAE: 0.4319). The close match between CV and holdout metrics demonstrates zero significant test leakage."
+  },
+  "generated_plots": {
+    "actual_vs_predicted": "D:\\COLLAGE CLASSES\\SEM - 03\\Machine Learning\\Project\\wine-quality-prediction\\ml-backend\\reports\\actual_vs_predicted.png",
+    "residuals_distribution": "D:\\COLLAGE CLASSES\\SEM - 03\\Machine Learning\\Project\\wine-quality-prediction\\ml-backend\\reports\\residuals_distribution.png",
+    "residuals_vs_predicted": "D:\\COLLAGE CLASSES\\SEM - 03\\Machine Learning\\Project\\wine-quality-prediction\\ml-backend\\reports\\residuals_vs_predicted.png",
+    "feature_importance": "D:\\COLLAGE CLASSES\\SEM - 03\\Machine Learning\\Project\\wine-quality-prediction\\ml-backend\\reports\\feature_importance.png",
+    "residuals_plot": "D:\\COLLAGE CLASSES\\SEM - 03\\Machine Learning\\Project\\wine-quality-prediction\\ml-backend\\reports\\residuals_plot.png"
+  },
+  "hyperparameter_tuning": {
+    "search_strategy": "GridSearchCV",
+    "cv_folds": 5,
+    "random_state": 42,
+    "models": {
+      "decision_tree": {
+        "model_family": "decision_tree",
+        "search_strategy": "GridSearchCV",
+        "search_space": {
+          "regressor__max_depth": [
+            3,
+            5,
+            8,
+            12,
+            "None"
+          ],
+          "regressor__min_samples_split": [
+            2,
+            5,
+            10
+          ],
+          "regressor__min_samples_leaf": [
+            1,
+            2,
+            4
+          ],
+          "regressor__max_features": [
+            "None",
+            "sqrt"
+          ]
+        },
+        "cv_folds": 5,
+        "selection_metric": "neg_mean_absolute_error",
+        "random_state": 42,
+        "best_hyperparameters": {
+          "regressor__max_depth": null,
+          "regressor__max_features": null,
+          "regressor__min_samples_leaf": 1,
+          "regressor__min_samples_split": 2
+        },
+        "performance_comparison": {
+          "untuned": {
+            "cv_mae": 0.4777,
+            "test_mae": 0.4625,
+            "test_rmse": 0.7826,
+            "test_r2": 0.0627
+          },
+          "tuned": {
+            "cv_mae": 0.4777,
+            "test_mae": 0.4625,
+            "test_rmse": 0.7826,
+            "test_r2": 0.0627
+          },
+          "cv_mae_improvement": 0.0,
+          "test_mae_improvement": 0.0
+        }
+      },
+      "random_forest": {
+        "model_family": "random_forest",
+        "search_strategy": "GridSearchCV",
+        "search_space": {
+          "regressor__n_estimators": [
+            100,
+            200
+          ],
+          "regressor__max_depth": [
+            "None",
+            15,
+            20
+          ],
+          "regressor__min_samples_split": [
+            2,
+            5
+          ],
+          "regressor__min_samples_leaf": [
+            1,
+            2
+          ],
+          "regressor__max_features": [
+            "sqrt",
+            1.0
+          ]
+        },
+        "cv_folds": 5,
+        "selection_metric": "neg_mean_absolute_error",
+        "random_state": 42,
+        "best_hyperparameters": {
+          "regressor__max_depth": null,
+          "regressor__max_features": "sqrt",
+          "regressor__min_samples_leaf": 1,
+          "regressor__min_samples_split": 2,
+          "regressor__n_estimators": 200
+        },
+        "performance_comparison": {
+          "untuned": {
+            "cv_mae": 0.4319,
+            "test_mae": 0.422,
+            "test_rmse": 0.5483,
+            "test_r2": 0.5399
+          },
+          "tuned": {
+            "cv_mae": 0.4318,
+            "test_mae": 0.4146,
+            "test_rmse": 0.5412,
+            "test_r2": 0.5518
+          },
+          "cv_mae_improvement": 0.0002,
+          "test_mae_improvement": 0.0074
+        }
+      }
+    },
+    "overall_best_model": "random_forest",
+    "model_family": "random_forest",
+    "search_space": {
+      "regressor__n_estimators": [
+        100,
+        200
+      ],
+      "regressor__max_depth": [
+        "None",
+        15,
+        20
+      ],
+      "regressor__min_samples_split": [
+        2,
+        5
+      ],
+      "regressor__min_samples_leaf": [
+        1,
+        2
+      ],
+      "regressor__max_features": [
+        "sqrt",
+        1.0
+      ]
+    },
+    "selection_metric": "neg_mean_absolute_error",
+    "best_hyperparameters": {
+      "regressor__max_depth": null,
+      "regressor__max_features": "sqrt",
+      "regressor__min_samples_leaf": 1,
+      "regressor__min_samples_split": 2,
+      "regressor__n_estimators": 200
+    },
+    "performance_comparison": {
+      "untuned": {
+        "cv_mae": 0.4319,
+        "test_mae": 0.422,
+        "test_rmse": 0.5483,
+        "test_r2": 0.5399
+      },
+      "tuned": {
+        "cv_mae": 0.4318,
+        "test_mae": 0.4146,
+        "test_rmse": 0.5412,
+        "test_r2": 0.5518
+      },
+      "cv_mae_improvement": 0.0002,
+      "test_mae_improvement": 0.0074
+    }
+  }
+}

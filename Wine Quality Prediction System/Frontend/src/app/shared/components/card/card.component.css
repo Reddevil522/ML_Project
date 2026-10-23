@@ -1,0 +1,59 @@
+.vino-card {
+  background: var(--card-gradient);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.vino-card-accent {
+  border-color: var(--border-wine);
+}
+
+.vino-card-elevated {
+  box-shadow: var(--shadow-elevated);
+}
+
+.vino-card:hover {
+  border-color: rgba(163, 45, 84, 0.4);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.4rem;
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 1rem;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.card-subtitle {
+  margin: 0.2rem 0 0 0;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.card-body {
+  padding: 1.4rem;
+  flex: 1 1 auto;
+}
+
+.card-footer:empty {
+  display: none;
+}
+
+.card-footer:not(:empty) {
+  padding: 0.9rem 1.4rem;
+  background: rgba(14, 11, 17, 0.4);
+  border-top: 1px solid var(--border-subtle);
+}

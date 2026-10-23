@@ -1,0 +1,91 @@
+{
+  "model_name": "RandomForestRegressor",
+  "pipeline_steps": [
+    "imputer",
+    "scaler",
+    "regressor"
+  ],
+  "training_timestamp_utc": "2026-10-22T06:01:47.663881+00:00",
+  "target_column": "quality",
+  "feature_names": [
+    "fixed acidity",
+    "volatile acidity",
+    "citric acid",
+    "residual sugar",
+    "chlorides",
+    "free sulfur dioxide",
+    "total sulfur dioxide",
+    "density",
+    "pH",
+    "sulphates",
+    "alcohol"
+  ],
+  "feature_count": 11,
+  "random_seed": 42,
+  "dataset_information": {
+    "source_path": "D:\\COLLAGE CLASSES\\SEM - 03\\Machine Learning\\Project\\wine-quality-prediction\\ml-backend\\data\\winequality-red.csv",
+    "total_rows": 1599,
+    "train_samples": 1279,
+    "test_samples": 320,
+    "test_size": 0.2
+  },
+  "training_configuration": {
+    "cv_folds": 5,
+    "primary_selection_metric": "mean_absolute_error (MAE, lower is better)",
+    "tie_breaking_hierarchy": [
+      "CV MAE (lowest)",
+      "CV RMSE (lowest)",
+      "CV R\u00b2 (highest)",
+      "Avg Fit Time (lowest)",
+      "Alphabetical Algorithm Name"
+    ],
+    "estimator_hyperparameters": "{'bootstrap': True, 'ccp_alpha': 0.0, 'criterion': 'squared_error', 'max_depth': None, 'max_features': 1.0, 'max_leaf_nodes': None, 'max_samples': None, 'min_impurity_decrease': 0.0, 'min_samples_leaf': 1, 'min_samples_split': 2, 'min_weight_fraction_leaf': 0.0, 'monotonic_cst': None, 'n_estimators': 100, 'n_jobs': -1, 'oob_score': False, 'random_state': 42, 'verbose': 0, 'warm_start': False}"
+  },
+  "cross_validation_results": {
+    "algorithm": "RandomForestRegressor",
+    "cv_mae_mean": 0.4319,
+    "cv_mae_std": 0.0203,
+    "cv_rmse_mean": 0.6008,
+    "cv_rmse_std": 0.0259,
+    "cv_mse_mean": 0.3616,
+    "cv_mse_std": 0.0314,
+    "cv_r2_mean": 0.442,
+    "cv_r2_std": 0.0361,
+    "avg_fit_time_seconds": 0.8492,
+    "avg_score_time_seconds": 0.1789,
+    "fold_mae_scores": [
+      0.4096,
+      0.4101,
+      0.4477,
+      0.4315,
+      0.4607
+    ],
+    "fold_rmse_scores": [
+      0.5762,
+      0.5736,
+      0.6398,
+      0.5927,
+      0.6214
+    ],
+    "fold_r2_scores": [
+      0.4231,
+      0.4884,
+      0.3987,
+      0.4815,
+      0.4183
+    ]
+  },
+  "holdout_test_evaluation": {
+    "dataset_rows": 1599,
+    "train_samples": 1279,
+    "test_samples": 320,
+    "selected_model": "RandomForestRegressor",
+    "mean_squared_error": 0.3007,
+    "root_mean_squared_error": 0.5483,
+    "mean_absolute_error": 0.422,
+    "r2_score": 0.5399,
+    "explained_variance_score": 0.5401,
+    "model_type": "Pipeline(steps=[('imputer', SimpleImputer(strategy='median')),\n                ('scaler', StandardScaler()),\n                ('regressor',\n                 RandomForestRegressor(n_jobs=-1, random_state=42))])",
+    "random_state": 42
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "dataset_metadata": {
+    "source": "UCI Wine Quality Dataset (Red Wine, Cortez et al., 2009)",
+    "delimiter": "semicolon (;)",
+    "feature_count": 11,
+    "target_column": "quality",
+    "ordered_features": [
+      "fixed acidity",
+      "volatile acidity",
+      "citric acid",
+      "residual sugar",
+      "chlorides",
+      "free sulfur dioxide",
+      "total sulfur dioxide",
+      "density",
+      "pH",
+      "sulphates",
+      "alcohol"
+    ]
+  },
+  "preprocessing_decisions": {
+    "imputation": {
+      "decision": "SimpleImputer(strategy='median') inside pipeline",
+      "rationale": "While the primary dataset has 0 missing values, production deployment requires robustness against unexpected missing values in real-time inference payloads.",
+      "leakage_prevention": "Imputer is fitted strictly on X_train only."
+    },
+    "feature_scaling": {
+      "decision": "StandardScaler()",
+      "rationale": "Physicochemical features vary across divergent scales: total sulfur dioxide reaches 289 while chlorides are below 0.61. StandardScaler centers features to mean 0 and variance 1.",
+      "leakage_prevention": "StandardScaler is fitted strictly on X_train within a Scikit-Learn Pipeline."
+    },
+    "dimensionality_reduction_pca": {
+      "used_by_default": false,
+      "justification_for_exclusion": "1. Low-dimensional feature space: With only 11 features and 1,599 observations (p << n), there is no curse of dimensionality or computational bottleneck.\n2. Loss of physicochemical interpretability: Each feature corresponds to a specific enological compound (e.g. volatile acidity = acetic acid defect; alcohol = body; sulphates = antioxidant). PCA projects these into linear combinations of latent eigenvectors, destroying feature importance and enological interpretability for domain practitioners.\n3. Non-linear tree resilience: Tree-based ensemble models (RandomForestRegressor) inherently perform implicit feature selection and are invariant to monotonic transformations and collinearity.",
+      "when_pca_would_be_justified": "Dimensionality reduction like PCA would be justified if:\na) Working with high-dimensional spectrometry data (e.g., hundreds or thousands of infrared or NMR spectral bands where p > n);\nb) Severe multicollinearity causing numerical instability in unregularized linear models;\nc) Severe storage or low-latency computational constraints requiring compressed feature vectors."
+    },
+    "sample_and_outlier_treatment": {
+      "decision": "Retain all 1,599 valid samples (no silent deletion of outliers or duplicate rows)",
+      "rationale": "1. Duplicate rows (240 rows): In enological chemical profiling, independent wine bottles from the same batch, barrel, or vineyard commonly share identical discrete lab measurements and expert ratings. Deleting them would artificially alter the natural population distribution.\n2. Outliers (e.g., residual sugar up to 15.5 g/dm^3, total SO2 up to 289 mg/dm^3): These represent legitimate styles of wine (e.g. sweeter dessert variants, wines with higher preservative levels) rather than measurement or sensor corruptions. Robust scaling and ensemble trees handle them safely."
+    },
+    "data_splitting_strategy": {
+      "train_test_split_ratio": "80% Train, 20% Holdout Test",
+      "random_state": 42,
+      "leakage_guarantee": "Dataset is split into X_train, X_test, y_train, y_test BEFORE any transformation. All transformers are encapsulated in Scikit-Learn Pipelines fitted solely on training splits."
+    },
+    "task_framing": {
+      "formulation": "Regression (predicting continuous quality score)",
+      "rationale": "Sensory score is an ordinal measurement with continuous distance properties. Framing as regression allows natural distance loss metrics (MSE/RMSE/MAE) and circumvents severe class imbalance on extreme scores (score 3 has only 10 samples; score 8 has only 18)."
+    }
+  }
+}

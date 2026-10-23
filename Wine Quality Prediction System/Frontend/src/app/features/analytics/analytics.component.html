@@ -1,0 +1,606 @@
+    <div class="analytics-page">
+      <!-- Page Header -->
+      <header class="page-header">
+        <div class="header-text">
+          <div class="badge-row">
+            <app-badge variant="wine" size="md">Model Diagnostics & Research</app-badge>
+            <app-badge variant="neutral" size="md">Scikit-Learn Pipeline</app-badge>
+          </div>
+          <h1>Verified Analytics & Diagnostic Visualizations</h1>
+          <p class="subtitle">
+            Rigorous evaluation metrics and diagnostic plots directly from verified training reports and holdout test evaluations.
+          </p>
+        </div>
+        <div class="header-actions">
+          <app-button
+            variant="outline"
+            size="sm"
+            [loading]="isLoading"
+            (btnClick)="loadAllAnalytics()"
+          >
+            Refresh Analytics Data
+          </app-button>
+        </div>
+      </header>
+
+      <!-- Loading State -->
+      <section *ngIf="isLoading" class="loading-state" aria-live="polite">
+        <app-card>
+          <app-loading-indicator
+            message="Querying verified model evaluation reports, correlation matrix, and holdout test points..."
+            size="lg"
+            [fullPage]="false"
+          ></app-loading-indicator>
+        </app-card>
+      </section>
+
+      <!-- Global Error / Empty State -->
+      <section *ngIf="!isLoading && error && !summary" class="error-state">
+        <app-alert
+          type="warning"
+          title="Diagnostic Reports Unavailable"
+          [message]="error"
+        >
+          <div class="alert-actions">
+            <app-button variant="outline" size="sm" (btnClick)="loadAllAnalytics()">
+              Retry Fetching Reports
+            </app-button>
+          </div>
+        </app-alert>
+
+        <app-card>
+          <app-empty-state
+            icon="analytics"
+            title="Analytics Data Not Found"
+            description="The diagnostic charts require access to the ML backend or verified static evaluation reports in /reports. No synthetic fallback KPIs will be displayed."
+            actionText="Retry Loading Reports"
+            (actionClicked)="loadAllAnalytics()"
+          ></app-empty-state>
+        </app-card>
+      </section>
+
+      <!-- Loaded Analytics Content -->
+      <div *ngIf="!isLoading && summary" class="analytics-charts-container">
+        <!-- Quick Nav Navigation Pills -->
+        <nav class="chart-nav" aria-label="Diagnostic Charts Navigation">
+          <button
+            *ngFor="let tab of chartTabs"
+            type="button"
+            class="nav-pill"
+            [class.active]="activeTab === tab.id"
+            (click)="activeTab = tab.id"
+          >
+            {{ tab.label }}
+          </button>
+        </nav>
+
+        <!-- ============================================================ -->
+        <!-- CHART 1: Wine Quality Distribution -->
+        <!-- ============================================================ -->
+        <section
+          *ngIf="activeTab === 'all' || activeTab === 'distribution'"
+          class="chart-section"
+          id="chart-distribution"
+        >
+          <app-card
+            headerTitle="1. Wine Quality Score Distribution"
+            subtitle="Observed sensory quality frequencies across all 1,599 UCI dataset samples"
+            [accentBorder]="true"
+          >
+            <div class="chart-wrapper">
+              <div class="chart-summary-pills">
+                <div class="stat-pill">
+                  <span class="pill-label">Total Samples</span>
+                  <span class="pill-val">{{ summary.dataset.sample_count | number }}</span>
+                </div>
+                <div class="stat-pill">
+                  <span class="pill-label">Mean Quality</span>
+                  <span class="pill-val text-wine">{{ summary.dataset.average_quality | number:'1.2-3' }}</span>
+                </div>
+                <div class="stat-pill">
+                  <span class="pill-label">Modal Ratings</span>
+                  <span class="pill-val">Scores 5 & 6 (82.5%)</span>
+                </div>
+                <div class="stat-pill">
+                  <span class="pill-label">Imbalance Ratio</span>
+                  <span class="pill-val">68.1 : 1</span>
+                </div>
+              </div>
+
+              <!-- Accessible SVG Bar Chart -->
+              <div class="svg-container">
+                <svg
+                  class="distribution-svg"
+                  viewBox="0 0 650 280"
+                  role="img"
+                  aria-labelledby="dist-title dist-desc"
+                >
+                  <title id="dist-title">Sensory Quality Score Distribution Histogram</title>
+                  <desc id="dist-desc">
+                    Histogram showing discrete ratings 3 to 8. Score 5 has 681 samples (42.6%), score 6 has 638 samples (39.9%),
+                    score 7 has 199 (12.5%), score 4 has 53 (3.3%), score 8 has 18 (1.1%), and score 3 has 10 (0.6%).
+                  </desc>
+
+                  <!-- Horizontal Guide Lines -->
+                  <line x1="50" y1="40" x2="620" y2="40" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 3"/>
+                  <text x="40" y="44" class="svg-axis-text" text-anchor="end">700</text>
+
+                  <line x1="50" y1="95" x2="620" y2="95" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 3"/>
+                  <text x="40" y="99" class="svg-axis-text" text-anchor="end">500</text>
+
+                  <line x1="50" y1="165" x2="620" y2="165" stroke="rgba(255,255,255,0.06)" stroke-dasharray="3 3"/>
+                  <text x="40" y="169" class="svg-axis-text" text-anchor="end">250</text>
+
+                  <line x1="50" y1="235" x2="620" y2="235" stroke="rgba(255,255,255,0.2)"/>
+                  <text x="40" y="239" class="svg-axis-text" text-anchor="end">0</text>
+
+                  <!-- Bars -->
+                  <g *ngFor="let bar of distributionBars; let i = index">
+                    <!-- Column Bar -->
+                    <rect
+                      [attr.x]="80 + i * 90"
+                      [attr.y]="235 - bar.heightPx"
+                      width="54"
+                      [attr.height]="bar.heightPx"
+                      rx="4"
+                      class="dist-bar"
+                      [class.highlight]="bar.score === '5' || bar.score === '6'"
+                      (mouseenter)="activeDistTooltip = bar"
+                      (mouseleave)="activeDistTooltip = null"
+                    />
+
+                    <!-- Percentage Label Above Bar -->
+                    <text
+                      [attr.x]="107 + i * 90"
+                      [attr.y]="225 - bar.heightPx"
+                      class="svg-val-text"
+                      text-anchor="middle"
+                    >
+                      {{ bar.count }}
+                    </text>
+                    <text
+                      [attr.x]="107 + i * 90"
+                      [attr.y]="212 - bar.heightPx"
+                      class="svg-pct-text"
+                      text-anchor="middle"
+                    >
+                      {{ bar.percentage | number:'1.1-1' }}%
+                    </text>
+
+                    <!-- X-Axis Label -->
+                    <text
+                      [attr.x]="107 + i * 90"
+                      y="256"
+                      class="svg-x-label"
+                      text-anchor="middle"
+                    >
+                      Rating {{ bar.score }}
+                    </text>
+                  </g>
+                </svg>
+              </div>
+
+              <!-- Tooltip display when hovering bar -->
+              <div class="tooltip-display-bar" *ngIf="activeDistTooltip">
+                <span class="tooltip-title">Sensory Rating {{ activeDistTooltip.score }}:</span>
+                <span class="tooltip-detail">
+                  <strong>{{ activeDistTooltip.count | number }}</strong> wines ({{ activeDistTooltip.percentage }}% of dataset) · {{ getSensoryCategory(activeDistTooltip.score) }}
+                </span>
+              </div>
+
+              <div class="chart-annotation">
+                <span class="annotation-icon">ℹ️</span>
+                <p>
+                  <strong>Formulation Insight:</strong> Severe class imbalance at the extremes (only 10 samples of rating 3 and 18 of rating 8)
+                  reinforces continuous regression rather than discrete classification, appropriately penalizing errors by Euclidean distance.
+                </p>
+              </div>
+            </div>
+          </app-card>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- CHART 2: Chemical Feature Correlation Heatmap -->
+        <!-- ============================================================ -->
+        <section
+          *ngIf="activeTab === 'all' || activeTab === 'correlation'"
+          class="chart-section"
+          id="chart-correlation"
+        >
+          <app-card
+            headerTitle="2. Physicochemical Correlation Heatmap"
+            subtitle="Verified 12×12 Pearson correlation coefficients between chemical features and quality"
+          >
+            <!-- Loading state for correlation -->
+            <div *ngIf="isCorrLoading" class="mini-loading">
+              <app-loading-indicator message="Calculating Pearson correlation matrix..."></app-loading-indicator>
+            </div>
+
+            <!-- Empty state for correlation -->
+            <div *ngIf="!isCorrLoading && (!correlationData || correlationData.matrix.length === 0)" class="empty-chart">
+              <app-empty-state
+                icon="analytics"
+                title="Correlation Dataset Unavailable"
+                description="The verified correlation matrix could not be retrieved from reports/correlation_matrix.json."
+              ></app-empty-state>
+            </div>
+
+            <div *ngIf="!isCorrLoading && correlationData && correlationData.matrix.length > 0" class="heatmap-wrapper">
+              <div class="heatmap-toolbar">
+                <div class="heatmap-legend">
+                  <span class="legend-label">Negative (-1.0)</span>
+                  <div class="legend-gradient"></div>
+                  <span class="legend-label">Positive (+1.0)</span>
+                </div>
+                <button
+                  type="button"
+                  class="toggle-btn"
+                  [class.active]="onlyQualityRow"
+                  (click)="onlyQualityRow = !onlyQualityRow"
+                >
+                  {{ onlyQualityRow ? 'Show Full 12×12 Matrix' : 'Focus on Quality Target' }}
+                </button>
+              </div>
+
+              <!-- Interactive Heatmap Table -->
+              <div class="heatmap-scroll-area">
+                <table class="heatmap-table" aria-label="Chemical feature correlation heatmap">
+                  <thead>
+                    <tr>
+                      <th class="corner-header">Feature</th>
+                      <th
+                        *ngFor="let col of correlationData.columns; let colIdx = index"
+                        [class.target-header]="col === 'quality'"
+                        class="col-header"
+                      >
+                        <span class="vertical-header">{{ formatFeatureShort(col) }}</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let rowName of filteredRows; let rIdx = index"
+                      [class.quality-row]="rowName === 'quality'"
+                    >
+                      <th scope="row" class="row-header" [class.target-row]="rowName === 'quality'">
+                        {{ rowName }}
+                      </th>
+                      <td
+                        *ngFor="let colName of correlationData.columns; let cIdx = index"
+                        class="heatmap-cell"
+                        [style.background-color]="getHeatmapColor(getCorrVal(rowName, colName))"
+                        [style.color]="getHeatmapTextColor(getCorrVal(rowName, colName))"
+                        (mouseenter)="activeCorrHover = { row: rowName, col: colName, val: getCorrVal(rowName, colName) }"
+                        (mouseleave)="activeCorrHover = null"
+                        [attr.title]="rowName + ' × ' + colName + ': ' + getCorrVal(rowName, colName)"
+                      >
+                        {{ getCorrVal(rowName, colName) | number:'1.2-2' }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Heatmap Hover Tooltip Banner -->
+              <div class="hover-banner" *ngIf="activeCorrHover">
+                <span class="banner-pair">{{ activeCorrHover.row }} <span class="text-wine">×</span> {{ activeCorrHover.col }}</span>
+                <span class="banner-val">
+                  Pearson r = <strong>{{ activeCorrHover.val > 0 ? '+' : '' }}{{ activeCorrHover.val | number:'1.4-4' }}</strong>
+                  ({{ getCorrelationInterpretation(activeCorrHover.val) }})
+                </span>
+              </div>
+
+              <div class="chart-annotation">
+                <span class="annotation-icon">🔬</span>
+                <p>
+                  <strong>Key Chemical Findings:</strong> <em>Alcohol</em> exhibits the strongest positive correlation with quality (+0.48),
+                  while <em>Volatile Acidity</em> exhibits the strongest negative correlation (-0.39), directly corroborating winemaking principles
+                  where elevated acetic acid manifests as spoiled vinegar taint.
+                </p>
+              </div>
+            </div>
+          </app-card>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- CHART 3: Actual vs Predicted Quality Plot -->
+        <!-- ============================================================ -->
+        <section
+          *ngIf="activeTab === 'all' || activeTab === 'parity'"
+          class="chart-section"
+          id="chart-parity"
+        >
+          <app-card
+            headerTitle="3. Actual versus Predicted Quality Plot"
+            subtitle="Holdout test evaluation (320 samples) with ideal 1:1 parity line"
+            [accentBorder]="true"
+          >
+            <!-- Loading state -->
+            <div *ngIf="isAvpLoading" class="mini-loading">
+              <app-loading-indicator message="Loading holdout test evaluation points..."></app-loading-indicator>
+            </div>
+
+            <!-- Empty state -->
+            <div *ngIf="!isAvpLoading && (!actualVsPredicted || actualVsPredicted.points.length === 0)" class="empty-chart">
+              <app-empty-state
+                icon="analytics"
+                title="Evaluation Points Unavailable"
+                description="Holdout test predictions are not available from reports/actual_vs_predicted.json."
+              ></app-empty-state>
+            </div>
+
+            <div *ngIf="!isAvpLoading && actualVsPredicted && actualVsPredicted.points.length > 0" class="parity-container">
+              <!-- Evaluation Metrics Summary Ribbon -->
+              <div class="parity-metrics-ribbon">
+                <div class="p-metric">
+                  <span class="p-label">Test Samples</span>
+                  <span class="p-value">{{ actualVsPredicted.test_samples }}</span>
+                </div>
+                <div class="p-metric">
+                  <span class="p-label">Holdout MAE</span>
+                  <span class="p-value text-wine">{{ actualVsPredicted.mae | number:'1.4-4' }}</span>
+                </div>
+                <div class="p-metric">
+                  <span class="p-label">Holdout RMSE</span>
+                  <span class="p-value">{{ actualVsPredicted.rmse | number:'1.4-4' }}</span>
+                </div>
+                <div class="p-metric">
+                  <span class="p-label">Holdout R²</span>
+                  <span class="p-value">{{ actualVsPredicted.r2 | number:'1.4-4' }}</span>
+                </div>
+              </div>
+
+              <!-- SVG Scatter Plot -->
+              <div class="svg-container">
+                <svg
+                  class="parity-svg"
+                  viewBox="0 0 620 380"
+                  role="img"
+                  aria-labelledby="parity-title parity-desc"
+                >
+                  <title id="parity-title">Actual versus Predicted Sensory Score Parity Scatter Plot</title>
+                  <desc id="parity-desc">
+                    Scatter plot of 320 holdout test evaluations comparing discrete sensory scores against continuous predictions.
+                    Includes a dashed 1:1 ideal parity reference line.
+                  </desc>
+
+                  <!-- Plot Background Frame -->
+                  <rect x="60" y="30" width="530" height="300" fill="rgba(14, 11, 17, 0.4)" stroke="var(--border-subtle)" />
+
+                  <!-- Gridlines & Y-Axis -->
+                  <line x1="60" y1="330" x2="590" y2="330" stroke="rgba(255,255,255,0.08)"/>
+                  <text x="50" y="334" class="svg-axis-text" text-anchor="end">4.0</text>
+
+                  <line x1="60" y1="255" x2="590" y2="255" stroke="rgba(255,255,255,0.08)"/>
+                  <text x="50" y="259" class="svg-axis-text" text-anchor="end">5.0</text>
+
+                  <line x1="60" y1="180" x2="590" y2="180" stroke="rgba(255,255,255,0.08)"/>
+                  <text x="50" y="184" class="svg-axis-text" text-anchor="end">6.0</text>
+
+                  <line x1="60" y1="105" x2="590" y2="105" stroke="rgba(255,255,255,0.08)"/>
+                  <text x="50" y="109" class="svg-axis-text" text-anchor="end">7.0</text>
+
+                  <line x1="60" y1="30" x2="590" y2="30" stroke="rgba(255,255,255,0.08)"/>
+                  <text x="50" y="34" class="svg-axis-text" text-anchor="end">8.0</text>
+
+                  <!-- X-Axis Labels -->
+                  <text x="60" y="352" class="svg-axis-text" text-anchor="middle">Rating 3</text>
+                  <text x="166" y="352" class="svg-axis-text" text-anchor="middle">Rating 4</text>
+                  <text x="272" y="352" class="svg-axis-text" text-anchor="middle">Rating 5</text>
+                  <text x="378" y="352" class="svg-axis-text" text-anchor="middle">Rating 6</text>
+                  <text x="484" y="352" class="svg-axis-text" text-anchor="middle">Rating 7</text>
+                  <text x="590" y="352" class="svg-axis-text" text-anchor="middle">Rating 8</text>
+
+                  <text x="325" y="375" class="svg-axis-title" text-anchor="middle">Actual Sensory Score (Discrete Holdout Rating)</text>
+                  <text x="20" y="180" class="svg-axis-title vertical-text" text-anchor="middle">Predicted Sensory Score (Continuous)</text>
+
+                  <!-- Ideal Parity Line (y = x) -->
+                  <!-- At x=4: x=166, y=330. At x=8: x=590, y=30 -->
+                  <line
+                    x1="60"
+                    y1="405"
+                    x2="590"
+                    y2="30"
+                    stroke="#eab308"
+                    stroke-width="2"
+                    stroke-dasharray="6 4"
+                    class="parity-line"
+                  />
+
+                  <!-- Scatter Points (320 observations) -->
+                  <circle
+                    *ngFor="let pt of parityPoints; let pIdx = index"
+                    [attr.cx]="pt.cx"
+                    [attr.cy]="pt.cy"
+                    r="4"
+                    class="scatter-dot"
+                    [style.fill]="getResidualColor(pt.residual)"
+                    (mouseenter)="activePointHover = pt"
+                    (mouseleave)="activePointHover = null"
+                  />
+                </svg>
+              </div>
+
+              <!-- Hover Observation Tooltip -->
+              <div class="hover-observation" *ngIf="activePointHover">
+                <span class="obs-tag">Sample Observation:</span>
+                <span>Actual: <strong>{{ activePointHover.actual }}</strong></span>
+                <span>Predicted: <strong>{{ activePointHover.predicted | number:'1.2-2' }}</strong></span>
+                <span>Residual: <strong [class.text-wine]="activePointHover.residual < 0">{{ activePointHover.residual > 0 ? '+' : '' }}{{ activePointHover.residual | number:'1.2-2' }}</strong></span>
+              </div>
+
+              <div class="chart-annotation">
+                <span class="annotation-icon">📊</span>
+                <p>
+                  <strong>Diagnostics Summary:</strong> The dashed gold line indicates perfect parity (predicted = actual).
+                  Points tightly track along the identity line in the modal range (ratings 5 and 6). Extreme ratings (3 and 8)
+                  show regression-to-the-mean shrinkage typical of tree ensembles trained on imbalanced datasets.
+                </p>
+              </div>
+            </div>
+          </app-card>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- CHART 4: Feature Importance Ranking -->
+        <!-- ============================================================ -->
+        <section
+          *ngIf="activeTab === 'all' || activeTab === 'importance'"
+          class="chart-section"
+          id="chart-importance"
+        >
+          <app-card
+            headerTitle="4. Physicochemical Feature Importance Ranking"
+            subtitle="Relative Mean Decrease in Impurity (MDI) across 100 decision trees in the selected Random Forest"
+          >
+            <!-- Empty state if model doesn't support feature importance -->
+            <div *ngIf="summary.feature_importance.length === 0" class="empty-chart">
+              <app-empty-state
+                icon="analytics"
+                title="Feature Importance Not Supported"
+                description="The currently selected estimator architecture does not expose tree-based MDI feature importance scores."
+              ></app-empty-state>
+            </div>
+
+            <div *ngIf="summary.feature_importance.length > 0" class="importance-list-container">
+              <!-- Feature Importance Bars -->
+              <div class="importance-list">
+                <div
+                  *ngFor="let item of summary.feature_importance; let rank = index"
+                  class="importance-row"
+                >
+                  <div class="row-meta">
+                    <span class="rank-badge">#{{ rank + 1 }}</span>
+                    <span class="feature-title">{{ item.feature }}</span>
+                    <span class="feature-role">{{ getFeatureRole(item.feature) }}</span>
+                  </div>
+
+                  <div class="bar-track">
+                    <div
+                      class="bar-fill"
+                      [style.width.%]="getImportanceWidth(item.percentage)"
+                      [title]="item.feature + ': ' + item.percentage + '%'"
+                    ></div>
+                  </div>
+
+                  <div class="row-value">
+                    <span class="pct-badge">{{ item.percentage | number:'1.1-1' }}%</span>
+                    <span class="raw-mdi">({{ item.importance | number:'1.4-4' }} MDI)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mandatory Non-Causal Scientific Notice -->
+              <div class="scientific-notice">
+                <span class="notice-icon">⚠️</span>
+                <div>
+                  <strong>Non-Causal Disclaimer:</strong>
+                  Feature importance scores represent model-dependent associations in the fitted estimator, <strong>not causal effects</strong>.
+                  For instance, while higher alcohol strongly associates with higher expert ratings in this dataset, artificially adding ethanol to a flawed vintage
+                  will not guarantee sensory quality improvement.
+                </div>
+              </div>
+            </div>
+          </app-card>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- CHART 5: Regression Model Comparison -->
+        <!-- ============================================================ -->
+        <section
+          *ngIf="activeTab === 'all' || activeTab === 'comparison'"
+          class="chart-section"
+          id="chart-comparison"
+        >
+          <app-card
+            headerTitle="5. Regression Model Comparison"
+            subtitle="5-Fold Cross-Validation benchmark across candidate algorithms using saved validation results"
+            [accentBorder]="true"
+          >
+            <div *ngIf="summary.model_comparison.length === 0" class="empty-chart">
+              <app-empty-state
+                icon="analytics"
+                title="Model Comparisons Unavailable"
+                description="Cross-validation model benchmarks could not be retrieved from reports/cv_model_comparison.json."
+              ></app-empty-state>
+            </div>
+
+            <div *ngIf="summary.model_comparison.length > 0" class="comparison-container">
+              <!-- Comparison Cards Grid -->
+              <div class="comparison-cards-grid">
+                <div
+                  *ngFor="let model of summary.model_comparison"
+                  class="model-card"
+                  [class.champion-card]="model.model === 'RandomForestRegressor'"
+                >
+                  <div class="card-top">
+                    <h3 class="model-name">{{ formatModelName(model.model) }}</h3>
+                    <app-badge
+                      *ngIf="model.model === 'RandomForestRegressor'"
+                      variant="wine"
+                      size="sm"
+                    >
+                      Selected Champion
+                    </app-badge>
+                    <app-badge
+                      *ngIf="model.model !== 'RandomForestRegressor'"
+                      variant="neutral"
+                      size="sm"
+                    >
+                      Candidate
+                    </app-badge>
+                  </div>
+
+                  <div class="model-metrics-list">
+                    <div class="metric-item">
+                      <div class="metric-header">
+                        <span class="m-title">CV MAE (Primary Metric)</span>
+                        <span class="m-val text-wine">{{ model.mae | number:'1.4-4' }}</span>
+                      </div>
+                      <div class="metric-bar-bg">
+                        <div class="metric-bar-fill" [style.width.%]="getMaeBarWidth(model.mae)"></div>
+                      </div>
+                      <span class="m-sub" *ngIf="model.mae_std">Fold Std: ±{{ model.mae_std | number:'1.4-4' }}</span>
+                    </div>
+
+                    <div class="metric-item">
+                      <div class="metric-header">
+                        <span class="m-title">CV RMSE</span>
+                        <span class="m-val">{{ model.rmse | number:'1.4-4' }}</span>
+                      </div>
+                      <div class="metric-bar-bg">
+                        <div class="metric-bar-fill fill-secondary" [style.width.%]="getRmseBarWidth(model.rmse)"></div>
+                      </div>
+                      <span class="m-sub" *ngIf="model.rmse_std">Fold Std: ±{{ model.rmse_std | number:'1.4-4' }}</span>
+                    </div>
+
+                    <div class="metric-item">
+                      <div class="metric-header">
+                        <span class="m-title">CV R² Score</span>
+                        <span class="m-val" [class.text-danger]="model.r2 < 0">{{ model.r2 | number:'1.4-4' }}</span>
+                      </div>
+                      <div class="metric-bar-bg">
+                        <div class="metric-bar-fill fill-r2" [style.width.%]="getR2BarWidth(model.r2)"></div>
+                      </div>
+                      <span class="m-sub" *ngIf="model.r2_std">Fold Std: ±{{ model.r2_std | number:'1.4-4' }}</span>
+                    </div>
+                  </div>
+
+                  <p class="model-note">
+                    {{ getModelRationale(model.model) }}
+                  </p>
+                </div>
+              </div>
+
+              <div class="chart-annotation">
+                <span class="annotation-icon">🏆</span>
+                <p>
+                  <strong>Selection Rationale:</strong> <code>RandomForestRegressor</code> systematically outperformed linear and single-tree baselines,
+                  achieving the lowest 5-fold CV MAE (0.4319 vs 0.4777 and 0.5057) and highest explained variance without data leakage.
+                </p>
+              </div>
+            </div>
+          </app-card>
+        </section>
+      </div>
+    </div>

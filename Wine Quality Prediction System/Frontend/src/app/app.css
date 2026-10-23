@@ -1,0 +1,4 @@
+/* Layout classes are managed in src/styles.css for global design system consistency */
+:host {
+  display: block;
+}

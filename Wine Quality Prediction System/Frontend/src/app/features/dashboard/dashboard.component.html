@@ -1,0 +1,175 @@
+<div class="dashboard-page">
+  <!-- Welcome Hero Header -->
+  <header class="hero-header">
+    <div class="hero-content">
+      <h1 class="hero-title">Precision Enological Intelligence</h1>
+      <p class="hero-subtitle">
+        Continuous regression quality predictions from 11 verified physicochemical properties
+        powered by Scikit-Learn machine learning pipelines.
+      </p>
+    </div>
+  </header>
+
+  <!-- Connection / Degraded Notice if Backend is Disconnected -->
+  <section *ngIf="backendStatus === 'disconnected' && !summary" class="status-alert-section">
+    <app-alert
+      type="warning"
+      title="FastAPI Backend Unavailable"
+      message="VinoSense AI is operating in offline mode. Verified training metrics and reports can be inspected from local static reports."
+    >
+      <div class="alert-actions">
+        <app-button variant="outline" size="sm" (btnClick)="loadDashboardSummary()">
+          Reconnect & Reload Metrics
+        </app-button>
+      </div>
+    </app-alert>
+  </section>
+
+  <!-- Loading State -->
+  <section *ngIf="isLoading" class="loading-section" aria-live="polite">
+    <app-card>
+      <app-loading-indicator
+        message="Loading verified dataset statistics and evaluation reports..."
+        size="lg"
+      ></app-loading-indicator>
+    </app-card>
+  </section>
+
+  <!-- Empty / Error State (No fake fallback numbers) -->
+  <section *ngIf="!isLoading && error && !summary" class="error-section">
+    <app-card>
+      <app-empty-state
+        icon="analytics"
+        title="Verified Metrics Unavailable"
+        [description]="error"
+        actionText="Retry Fetching Reports"
+        (actionClicked)="loadDashboardSummary()"
+      ></app-empty-state>
+    </app-card>
+  </section>
+
+  <!-- Verified KPI Metrics Overview Cards -->
+  <section *ngIf="!isLoading && summary" class="kpi-grid" aria-label="System Metrics">
+    <!-- KPI 1: Dataset Sample Count -->
+    <app-card>
+      <div class="kpi-card-inner">
+        <div class="kpi-header-row">
+          <span class="kpi-label">Dataset Sample Count</span>
+          <span class="kpi-source-badge" title="Verified source: reports/data_summary.json">Verified Data</span>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpi-sample-count">{{ summary.dataset.sample_count | number }}</span>
+          <span class="kpi-unit">Samples</span>
+        </div>
+        <p class="kpi-desc">
+          UCI Red Wine benchmark with 80% train ({{ summary.dataset.sample_count - summary.model.test_samples }}) and 20% holdout ({{ summary.model.test_samples }})
+        </p>
+      </div>
+    </app-card>
+
+    <!-- KPI 2: Average Observed Quality -->
+    <app-card>
+      <div class="kpi-card-inner">
+        <div class="kpi-header-row">
+          <span class="kpi-label">Average Observed Quality</span>
+          <span class="kpi-source-badge" title="Verified source: reports/data_summary.json">Target Mean</span>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpi-avg-quality">{{ summary.dataset.average_quality | number:'1.2-3' }}</span>
+          <span class="kpi-unit">/ 10 Scale</span>
+        </div>
+        <p class="kpi-desc">
+          Std Dev: ±{{ summary.dataset.quality_std | number:'1.2-2' }} · 82.5% of samples rated 5 or 6
+        </p>
+      </div>
+    </app-card>
+
+    <!-- KPI 3: Selected Model -->
+    <app-card [accentBorder]="true">
+      <div class="kpi-card-inner">
+        <div class="kpi-header-row">
+          <span class="kpi-label">Selected Model</span>
+          <span class="kpi-source-badge badge-accent" title="Verified source: models/wine_quality_model_metadata.json">Champion</span>
+        </div>
+        <div class="kpi-value-row">
+          <span class="kpi-value" id="kpi-selected-model">{{ summary.model.selected_model }}</span>
+        </div>
+        <p class="kpi-desc">
+          100-tree ensemble with StandardScaler & SimpleImputer; selected via 5-fold CV hierarchy
+        </p>
+      </div>
+    </app-card>
+
+    <!-- KPI 4: Test-set MAE, RMSE and R² -->
+    <app-card [accentBorder]="true">
+      <div class="kpi-card-inner">
+        <div class="kpi-header-row">
+          <span class="kpi-label">Holdout Test Evaluation</span>
+          <span class="kpi-source-badge" title="Verified source: reports/metrics.json">320 Samples</span>
+        </div>
+        <div class="test-metrics-grid">
+          <div class="metric-mini-box">
+            <span class="mini-label">MAE</span>
+            <span class="mini-value text-wine" id="kpi-mae">{{ summary.model.mae | number:'1.4-4' }}</span>
+          </div>
+          <div class="metric-mini-box">
+            <span class="mini-label">RMSE</span>
+            <span class="mini-value" id="kpi-rmse">{{ summary.model.rmse | number:'1.4-4' }}</span>
+          </div>
+          <div class="metric-mini-box">
+            <span class="mini-label">R²</span>
+            <span class="mini-value" id="kpi-r2">{{ summary.model.r2 | number:'1.4-4' }}</span>
+          </div>
+        </div>
+        <p class="kpi-desc">
+          Isolated holdout test metrics; close match to CV MAE confirms zero test leakage
+        </p>
+      </div>
+    </app-card>
+  </section>
+
+  <!-- Navigation & Feature Modules -->
+  <section class="modules-grid">
+    <app-card headerTitle="Real-Time Sensory Quality Prediction" subtitle="Interactive chemical analysis">
+      <div class="module-body">
+        <p>
+          Submit custom laboratory measurements or load enological presets (Premium Reserve, Table Wine,
+          Spoiled Sample) to evaluate continuous sensory score estimations.
+        </p>
+        <div class="module-actions">
+          <a routerLink="/prediction">
+            <app-button variant="primary" size="md">Open Prediction Console</app-button>
+          </a>
+        </div>
+      </div>
+    </app-card>
+
+    <app-card headerTitle="Model Architecture & Analytics" subtitle="Diagnostic insights and charts">
+      <div class="module-body">
+        <p>
+          Explore the 5 diagnostic charts: sensory quality distribution, correlation heatmap, actual vs predicted
+          parity plot, feature importance ranking, and cross-validation model comparison.
+        </p>
+        <div class="module-actions">
+          <a routerLink="/analytics">
+            <app-button variant="secondary" size="md">View Diagnostic Analytics</app-button>
+          </a>
+        </div>
+      </div>
+    </app-card>
+
+    <app-card headerTitle="Session History & Audit Trail" subtitle="Logged sensory evaluations">
+      <div class="module-body">
+        <p>
+          Review recent predictions generated during this session, examine chemical inputs, and audit
+          regression outputs across multiple vintages.
+        </p>
+        <div class="module-actions">
+          <a routerLink="/history">
+            <app-button variant="outline" size="md">Browse History Log</app-button>
+          </a>
+        </div>
+      </div>
+    </app-card>
+  </section>
+</div>

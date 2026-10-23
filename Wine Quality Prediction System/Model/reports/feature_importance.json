@@ -1,0 +1,60 @@
+{
+  "model": "RandomForestRegressor",
+  "features": [
+    {
+      "feature": "alcohol",
+      "importance": 0.2709,
+      "percentage": 27.09
+    },
+    {
+      "feature": "sulphates",
+      "importance": 0.1484,
+      "percentage": 14.84
+    },
+    {
+      "feature": "volatile acidity",
+      "importance": 0.1115,
+      "percentage": 11.15
+    },
+    {
+      "feature": "total sulfur dioxide",
+      "importance": 0.0768,
+      "percentage": 7.68
+    },
+    {
+      "feature": "chlorides",
+      "importance": 0.0711,
+      "percentage": 7.11
+    },
+    {
+      "feature": "pH",
+      "importance": 0.0614,
+      "percentage": 6.14
+    },
+    {
+      "feature": "residual sugar",
+      "importance": 0.0579,
+      "percentage": 5.79
+    },
+    {
+      "feature": "fixed acidity",
+      "importance": 0.0532,
+      "percentage": 5.32
+    },
+    {
+      "feature": "citric acid",
+      "importance": 0.0508,
+      "percentage": 5.08
+    },
+    {
+      "feature": "density",
+      "importance": 0.0508,
+      "percentage": 5.08
+    },
+    {
+      "feature": "free sulfur dioxide",
+      "importance": 0.0472,
+      "percentage": 4.72
+    }
+  ]
+}

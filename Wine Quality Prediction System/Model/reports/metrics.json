@@ -1,0 +1,9 @@
+{
+  "mean_squared_error": 0.3007,
+  "root_mean_squared_error": 0.5483,
+  "mean_absolute_error": 0.422,
+  "r2_score": 0.5399,
+  "explained_variance_score": 0.5401,
+  "model_artifact": "wine_quality_model.joblib",
+  "test_samples": 320
+}

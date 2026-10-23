@@ -1,0 +1,295 @@
+{
+  "dataset_name": "UCI Red Wine Quality Dataset",
+  "row_count": 1599,
+  "column_count": 12,
+  "data_types": {
+    "fixed acidity": "float64",
+    "volatile acidity": "float64",
+    "citric acid": "float64",
+    "residual sugar": "float64",
+    "chlorides": "float64",
+    "free sulfur dioxide": "float64",
+    "total sulfur dioxide": "float64",
+    "density": "float64",
+    "pH": "float64",
+    "sulphates": "float64",
+    "alcohol": "float64",
+    "quality": "int64"
+  },
+  "missing_values": {
+    "fixed acidity": 0,
+    "volatile acidity": 0,
+    "citric acid": 0,
+    "residual sugar": 0,
+    "chlorides": 0,
+    "free sulfur dioxide": 0,
+    "total sulfur dioxide": 0,
+    "density": 0,
+    "pH": 0,
+    "sulphates": 0,
+    "alcohol": 0,
+    "quality": 0
+  },
+  "total_missing_values": 0,
+  "duplicate_rows_count": 240,
+  "duplicate_rows_treatment": "retained_as_valid_measurements_from_same_batch",
+  "infinite_values": {
+    "fixed acidity": 0,
+    "volatile acidity": 0,
+    "citric acid": 0,
+    "residual sugar": 0,
+    "chlorides": 0,
+    "free sulfur dioxide": 0,
+    "total sulfur dioxide": 0,
+    "density": 0,
+    "pH": 0,
+    "sulphates": 0,
+    "alcohol": 0,
+    "quality": 0
+  },
+  "total_infinite_values": 0,
+  "chemical_feature_summary": {
+    "fixed acidity": {
+      "count": 1599,
+      "mean": 8.3196,
+      "std": 1.7411,
+      "min": 4.6,
+      "median": 7.9,
+      "max": 15.9
+    },
+    "volatile acidity": {
+      "count": 1599,
+      "mean": 0.5278,
+      "std": 0.1791,
+      "min": 0.12,
+      "median": 0.52,
+      "max": 1.58
+    },
+    "citric acid": {
+      "count": 1599,
+      "mean": 0.271,
+      "std": 0.1948,
+      "min": 0.0,
+      "median": 0.26,
+      "max": 1.0
+    },
+    "residual sugar": {
+      "count": 1599,
+      "mean": 2.5388,
+      "std": 1.4099,
+      "min": 0.9,
+      "median": 2.2,
+      "max": 15.5
+    },
+    "chlorides": {
+      "count": 1599,
+      "mean": 0.0875,
+      "std": 0.0471,
+      "min": 0.012,
+      "median": 0.079,
+      "max": 0.611
+    },
+    "free sulfur dioxide": {
+      "count": 1599,
+      "mean": 15.8749,
+      "std": 10.4602,
+      "min": 1.0,
+      "median": 14.0,
+      "max": 72.0
+    },
+    "total sulfur dioxide": {
+      "count": 1599,
+      "mean": 46.4678,
+      "std": 32.8953,
+      "min": 6.0,
+      "median": 38.0,
+      "max": 289.0
+    },
+    "density": {
+      "count": 1599,
+      "mean": 0.9967,
+      "std": 0.0019,
+      "min": 0.9901,
+      "median": 0.9968,
+      "max": 1.0037
+    },
+    "pH": {
+      "count": 1599,
+      "mean": 3.3111,
+      "std": 0.1544,
+      "min": 2.74,
+      "median": 3.31,
+      "max": 4.01
+    },
+    "sulphates": {
+      "count": 1599,
+      "mean": 0.6581,
+      "std": 0.1695,
+      "min": 0.33,
+      "median": 0.62,
+      "max": 2.0
+    },
+    "alcohol": {
+      "count": 1599,
+      "mean": 10.423,
+      "std": 1.0657,
+      "min": 8.4,
+      "median": 10.2,
+      "max": 14.9
+    }
+  },
+  "out_of_range_investigation": {
+    "fixed acidity": {
+      "iqr_outlier_count": 49,
+      "iqr_lower_fence": 3.95,
+      "iqr_upper_fence": 12.35,
+      "enological_bounds": [
+        3.0,
+        20.0
+      ],
+      "physically_out_of_bounds_count": 0,
+      "action": "preserved_in_dataset_no_silent_deletion"
+    },
+    "volatile acidity": {
+      "iqr_outlier_count": 19,
+      "iqr_lower_fence": 0.015,
+      "iqr_upper_fence": 1.015,
+      "enological_bounds": [
+        0.05,
+        2.0
+      ],
+      "physically_out_of_bounds_count": 0,
+      "action": "preserved_in_dataset_no_silent_deletion"
+    },
+    "citric acid": {
+      "iqr_outlier_count": 1,
+      "iqr_lower_fence": -0.405,
+      "iqr_upper_fence": 0.915,
+      "enological_bounds": [
+        0.0,
+        1.5
+      ],
+      "physically_out_of_bounds_count": 0,
+      "action": "preserved_in_dataset_no_silent_deletion"
+    },
+    "residual sugar": {
+      "iqr_outlier_count": 155,
+      "iqr_lower_fence": 0.85,
+      "iqr_upper_fence": 3.65,
+      "enological_bounds": [
+        0.5,
+        30.0
+      ],
+      "physically_out_of_bounds_count": 0,
+      "action": "preserved_in_dataset_no_silent_deletion"
+    },
+    "chlorides": {
+      "iqr_outlier_count": 112,
+      "iqr_lower_fence": 0.04,
+      "iqr_upper_fence": 0.12,
+      "enological_bounds": [
+        0.005,
+        1.0
+      ],
+      "physically_out_of_bounds_count": 0,
+      "action": "preserved_in_dataset_no_silent_deletion"
+    },
+    "free sulfur dioxide": {
+      "iqr_outlier_count": 30,
+      "iqr_lower_fence": -14.0,
+      "iqr_upper_fence": 42.0,
+      "enological_bounds": [
+        0.5,
+        120.0
+      ],
+      "physically_out_of_bounds_count": 0,
+      "action": "preserved_in_dataset_no_silent_deletion"
+    },
+    "total sulfur dioxide": {
+      "iqr_outlier_count": 55,
+      "iqr_lower_fence": -38.0,
+      "iqr_upper_fence": 122.0,
+      "enological_bounds": [
+        5.0,
+        350.0
+      ],
+      "physically_out_of_bounds_count": 0,
+      "action": "preserved_in_dataset_no_silent_deletion"
+    },
+    "density": {
+      "iqr_outlier_count": 45,
+      "iqr_lower_fence": 0.9922,
+      "iqr_upper_fence": 1.0012,
+      "enological_bounds": [
+        0.98,
+        1.015
+      ],
+      "physically_out_of_bounds_count": 0,
+      "action": "preserved_in_dataset_no_silent_deletion"
+    },
+    "pH": {
+      "iqr_outlier_count": 35,
+      "iqr_lower_fence": 2.925,
+      "iqr_upper_fence": 3.685,
+      "enological_bounds": [
+        2.5,
+        4.5
+      ],
+      "physically_out_of_bounds_count": 0,
+      "action": "preserved_in_dataset_no_silent_deletion"
+    },
+    "sulphates": {
+      "iqr_outlier_count": 59,
+      "iqr_lower_fence": 0.28,
+      "iqr_upper_fence": 1.0,
+      "enological_bounds": [
+        0.2,
+        2.5
+      ],
+      "physically_out_of_bounds_count": 0,
+      "action": "preserved_in_dataset_no_silent_deletion"
+    },
+    "alcohol": {
+      "iqr_outlier_count": 13,
+      "iqr_lower_fence": 7.1,
+      "iqr_upper_fence": 13.5,
+      "enological_bounds": [
+        7.0,
+        17.0
+      ],
+      "physically_out_of_bounds_count": 0,
+      "action": "preserved_in_dataset_no_silent_deletion"
+    }
+  },
+  "target_quality_distribution": {
+    "score_counts": {
+      "3": 10,
+      "4": 53,
+      "5": 681,
+      "6": 638,
+      "7": 199,
+      "8": 18
+    },
+    "score_percentages": {
+      "3": 0.63,
+      "4": 3.31,
+      "5": 42.59,
+      "6": 39.9,
+      "7": 12.45,
+      "8": 1.13
+    },
+    "mean_quality": 5.636,
+    "std_quality": 0.8076,
+    "min_quality": 3,
+    "median_quality": 6.0,
+    "max_quality": 8,
+    "class_imbalance_ratio": 68.1,
+    "most_frequent_scores": [
+      5,
+      6
+    ],
+    "modal_scores_combined_percentage": 82.49,
+    "modeling_formulation": "continuous_regression",
+    "rationale": "Sensory quality is an intrinsically ordinal scale with meaningful numerical distances. Regression appropriately penalizes errors based on distance (e.g. predicting 5 for a 4 has smaller penalty than predicting 8), whereas categorical classification would treat all misclassifications equally and severely suffer from minority class rarity (ratings 3 and 8)."
+  }
+}

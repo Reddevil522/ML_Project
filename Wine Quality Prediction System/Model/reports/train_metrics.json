@@ -1,0 +1,13 @@
+{
+  "dataset_rows": 1599,
+  "train_samples": 1279,
+  "test_samples": 320,
+  "selected_model": "RandomForestRegressor",
+  "mean_squared_error": 0.3007,
+  "root_mean_squared_error": 0.5483,
+  "mean_absolute_error": 0.422,
+  "r2_score": 0.5399,
+  "explained_variance_score": 0.5401,
+  "model_type": "Pipeline(steps=[('imputer', SimpleImputer(strategy='median')),\n                ('scaler', StandardScaler()),\n                ('regressor',\n                 RandomForestRegressor(n_jobs=-1, random_state=42))])",
+  "random_state": 42
+}

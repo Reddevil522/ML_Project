@@ -1,0 +1,121 @@
+.vino-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  position: relative;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  border: 1px solid transparent;
+}
+
+.vino-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* Sizes */
+.btn-sm {
+  padding: 0.4rem 0.75rem;
+  font-size: 0.82rem;
+}
+
+.btn-md {
+  padding: 0.65rem 1.2rem;
+  font-size: 0.92rem;
+}
+
+.btn-lg {
+  padding: 0.85rem 1.6rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+/* Variants */
+.btn-primary {
+  background: var(--wine-gradient);
+  color: #ffffff;
+  border-color: rgba(217, 130, 155, 0.3);
+  box-shadow: 0 2px 10px rgba(125, 24, 56, 0.4);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: linear-gradient(135deg, #962247 0%, #541226 100%);
+  box-shadow: 0 4px 16px rgba(163, 45, 84, 0.5);
+  border-color: var(--wine-rose);
+}
+
+.btn-secondary {
+  background: var(--bg-card-hover);
+  color: var(--text-primary);
+  border-color: var(--border-medium);
+}
+
+.btn-secondary:hover:not(:disabled) {
+  background: #2f2238;
+  border-color: var(--wine-rose);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--wine-rose);
+  border-color: var(--border-wine);
+}
+
+.btn-outline:hover:not(:disabled) {
+  background: var(--wine-rose-subtle);
+  border-color: var(--wine-rose);
+  color: var(--wine-rose-light);
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.15);
+  color: #fca5a5;
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.btn-danger:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: var(--status-danger);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text-secondary);
+  border-color: transparent;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+}
+
+/* Loading Spinner */
+.spinner {
+  position: absolute;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.invisible {
+  visibility: hidden;
+}

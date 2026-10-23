@@ -1,0 +1,23 @@
+<div
+  class="vino-card"
+  [class.vino-card-accent]="accentBorder"
+  [class.vino-card-elevated]="elevated"
+>
+  <div *ngIf="headerTitle || hasHeaderSlot" class="card-header">
+    <div class="header-text" *ngIf="headerTitle">
+      <h3 class="card-title">{{ headerTitle }}</h3>
+      <p *ngIf="subtitle" class="card-subtitle">{{ subtitle }}</p>
+    </div>
+    <div class="header-actions">
+      <ng-content select="[card-header]"></ng-content>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="card-footer">
+    <ng-content select="[card-footer]"></ng-content>
+  </div>
+</div>

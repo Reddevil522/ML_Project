@@ -1,0 +1,57 @@
+.vino-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+  white-space: nowrap;
+  line-height: 1;
+  border: 1px solid transparent;
+}
+
+.badge-sm {
+  padding: 0.25rem 0.55rem;
+  font-size: 0.72rem;
+}
+
+.badge-md {
+  padding: 0.35rem 0.75rem;
+  font-size: 0.8rem;
+}
+
+.badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: currentColor;
+}
+
+.badge-wine {
+  background: var(--wine-rose-subtle);
+  color: var(--wine-rose);
+  border-color: var(--border-wine);
+}
+
+.badge-success {
+  background: var(--status-success-bg);
+  color: var(--status-success);
+  border-color: rgba(34, 197, 94, 0.25);
+}
+
+.badge-warning {
+  background: var(--status-warning-bg);
+  color: var(--status-warning);
+  border-color: rgba(234, 179, 8, 0.25);
+}
+
+.badge-danger {
+  background: var(--status-danger-bg);
+  color: var(--status-danger);
+  border-color: rgba(239, 68, 68, 0.25);
+}
+
+.badge-neutral {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-secondary);
+  border-color: var(--border-subtle);
+}

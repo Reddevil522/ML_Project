@@ -1,0 +1,1608 @@
+{
+  "test_samples": 320,
+  "mae": 0.422,
+  "rmse": 0.5483,
+  "r2": 0.5399,
+  "points": [
+    {
+      "actual": 6,
+      "predicted": 5.3,
+      "residual": 0.7
+    },
+    {
+      "actual": 5,
+      "predicted": 5.22,
+      "residual": -0.22
+    },
+    {
+      "actual": 6,
+      "predicted": 5.46,
+      "residual": 0.54
+    },
+    {
+      "actual": 5,
+      "predicted": 5.19,
+      "residual": -0.19
+    },
+    {
+      "actual": 6,
+      "predicted": 6.0,
+      "residual": 0.0
+    },
+    {
+      "actual": 5,
+      "predicted": 5.06,
+      "residual": -0.06
+    },
+    {
+      "actual": 5,
+      "predicted": 5.13,
+      "residual": -0.13
+    },
+    {
+      "actual": 5,
+      "predicted": 4.92,
+      "residual": 0.08
+    },
+    {
+      "actual": 5,
+      "predicted": 6.14,
+      "residual": -1.14
+    },
+    {
+      "actual": 6,
+      "predicted": 5.88,
+      "residual": 0.12
+    },
+    {
+      "actual": 7,
+      "predicted": 6.75,
+      "residual": 0.25
+    },
+    {
+      "actual": 3,
+      "predicted": 5.27,
+      "residual": -2.27
+    },
+    {
+      "actual": 5,
+      "predicted": 5.73,
+      "residual": -0.73
+    },
+    {
+      "actual": 5,
+      "predicted": 5.3,
+      "residual": -0.3
+    },
+    {
+      "actual": 6,
+      "predicted": 5.46,
+      "residual": 0.54
+    },
+    {
+      "actual": 7,
+      "predicted": 6.34,
+      "residual": 0.66
+    },
+    {
+      "actual": 5,
+      "predicted": 5.43,
+      "residual": -0.43
+    },
+    {
+      "actual": 7,
+      "predicted": 5.82,
+      "residual": 1.18
+    },
+    {
+      "actual": 8,
+      "predicted": 6.84,
+      "residual": 1.16
+    },
+    {
+      "actual": 5,
+      "predicted": 5.06,
+      "residual": -0.06
+    },
+    {
+      "actual": 5,
+      "predicted": 4.94,
+      "residual": 0.06
+    },
+    {
+      "actual": 6,
+      "predicted": 5.87,
+      "residual": 0.13
+    },
+    {
+      "actual": 5,
+      "predicted": 5.35,
+      "residual": -0.35
+    },
+    {
+      "actual": 6,
+      "predicted": 5.94,
+      "residual": 0.06
+    },
+    {
+      "actual": 6,
+      "predicted": 5.59,
+      "residual": 0.41
+    },
+    {
+      "actual": 6,
+      "predicted": 5.97,
+      "residual": 0.03
+    },
+    {
+      "actual": 7,
+      "predicted": 6.44,
+      "residual": 0.56
+    },
+    {
+      "actual": 6,
+      "predicted": 5.34,
+      "residual": 0.66
+    },
+    {
+      "actual": 5,
+      "predicted": 5.31,
+      "residual": -0.31
+    },
+    {
+      "actual": 6,
+      "predicted": 5.98,
+      "residual": 0.02
+    },
+    {
+      "actual": 5,
+      "predicted": 5.31,
+      "residual": -0.31
+    },
+    {
+      "actual": 5,
+      "predicted": 5.45,
+      "residual": -0.45
+    },
+    {
+      "actual": 6,
+      "predicted": 5.9,
+      "residual": 0.1
+    },
+    {
+      "actual": 5,
+      "predicted": 5.56,
+      "residual": -0.56
+    },
+    {
+      "actual": 6,
+      "predicted": 5.87,
+      "residual": 0.13
+    },
+    {
+      "actual": 5,
+      "predicted": 5.14,
+      "residual": -0.14
+    },
+    {
+      "actual": 7,
+      "predicted": 6.29,
+      "residual": 0.71
+    },
+    {
+      "actual": 5,
+      "predicted": 6.0,
+      "residual": -1.0
+    },
+    {
+      "actual": 4,
+      "predicted": 5.37,
+      "residual": -1.37
+    },
+    {
+      "actual": 6,
+      "predicted": 6.02,
+      "residual": -0.02
+    },
+    {
+      "actual": 5,
+      "predicted": 5.2,
+      "residual": -0.2
+    },
+    {
+      "actual": 5,
+      "predicted": 5.14,
+      "residual": -0.14
+    },
+    {
+      "actual": 7,
+      "predicted": 6.26,
+      "residual": 0.74
+    },
+    {
+      "actual": 5,
+      "predicted": 5.09,
+      "residual": -0.09
+    },
+    {
+      "actual": 5,
+      "predicted": 5.58,
+      "residual": -0.58
+    },
+    {
+      "actual": 6,
+      "predicted": 5.69,
+      "residual": 0.31
+    },
+    {
+      "actual": 7,
+      "predicted": 6.36,
+      "residual": 0.64
+    },
+    {
+      "actual": 6,
+      "predicted": 5.65,
+      "residual": 0.35
+    },
+    {
+      "actual": 5,
+      "predicted": 5.18,
+      "residual": -0.18
+    },
+    {
+      "actual": 6,
+      "predicted": 5.76,
+      "residual": 0.24
+    },
+    {
+      "actual": 5,
+      "predicted": 5.06,
+      "residual": -0.06
+    },
+    {
+      "actual": 5,
+      "predicted": 5.25,
+      "residual": -0.25
+    },
+    {
+      "actual": 5,
+      "predicted": 5.64,
+      "residual": -0.64
+    },
+    {
+      "actual": 7,
+      "predicted": 7.1,
+      "residual": -0.1
+    },
+    {
+      "actual": 6,
+      "predicted": 5.19,
+      "residual": 0.81
+    },
+    {
+      "actual": 6,
+      "predicted": 5.64,
+      "residual": 0.36
+    },
+    {
+      "actual": 6,
+      "predicted": 5.95,
+      "residual": 0.05
+    },
+    {
+      "actual": 5,
+      "predicted": 5.88,
+      "residual": -0.88
+    },
+    {
+      "actual": 5,
+      "predicted": 5.65,
+      "residual": -0.65
+    },
+    {
+      "actual": 5,
+      "predicted": 5.02,
+      "residual": -0.02
+    },
+    {
+      "actual": 5,
+      "predicted": 5.67,
+      "residual": -0.67
+    },
+    {
+      "actual": 7,
+      "predicted": 6.13,
+      "residual": 0.87
+    },
+    {
+      "actual": 5,
+      "predicted": 5.49,
+      "residual": -0.49
+    },
+    {
+      "actual": 6,
+      "predicted": 5.32,
+      "residual": 0.68
+    },
+    {
+      "actual": 6,
+      "predicted": 6.71,
+      "residual": -0.71
+    },
+    {
+      "actual": 5,
+      "predicted": 5.35,
+      "residual": -0.35
+    },
+    {
+      "actual": 6,
+      "predicted": 6.66,
+      "residual": -0.66
+    },
+    {
+      "actual": 5,
+      "predicted": 5.64,
+      "residual": -0.64
+    },
+    {
+      "actual": 6,
+      "predicted": 6.69,
+      "residual": -0.69
+    },
+    {
+      "actual": 5,
+      "predicted": 5.47,
+      "residual": -0.47
+    },
+    {
+      "actual": 6,
+      "predicted": 6.07,
+      "residual": -0.07
+    },
+    {
+      "actual": 4,
+      "predicted": 5.25,
+      "residual": -1.25
+    },
+    {
+      "actual": 6,
+      "predicted": 5.86,
+      "residual": 0.14
+    },
+    {
+      "actual": 6,
+      "predicted": 5.58,
+      "residual": 0.42
+    },
+    {
+      "actual": 6,
+      "predicted": 6.08,
+      "residual": -0.08
+    },
+    {
+      "actual": 5,
+      "predicted": 5.05,
+      "residual": -0.05
+    },
+    {
+      "actual": 8,
+      "predicted": 6.61,
+      "residual": 1.39
+    },
+    {
+      "actual": 5,
+      "predicted": 5.28,
+      "residual": -0.28
+    },
+    {
+      "actual": 6,
+      "predicted": 5.99,
+      "residual": 0.01
+    },
+    {
+      "actual": 6,
+      "predicted": 6.59,
+      "residual": -0.59
+    },
+    {
+      "actual": 5,
+      "predicted": 5.18,
+      "residual": -0.18
+    },
+    {
+      "actual": 6,
+      "predicted": 6.78,
+      "residual": -0.78
+    },
+    {
+      "actual": 5,
+      "predicted": 5.18,
+      "residual": -0.18
+    },
+    {
+      "actual": 6,
+      "predicted": 5.61,
+      "residual": 0.39
+    },
+    {
+      "actual": 6,
+      "predicted": 5.79,
+      "residual": 0.21
+    },
+    {
+      "actual": 7,
+      "predicted": 6.48,
+      "residual": 0.52
+    },
+    {
+      "actual": 5,
+      "predicted": 5.12,
+      "residual": -0.12
+    },
+    {
+      "actual": 6,
+      "predicted": 5.97,
+      "residual": 0.03
+    },
+    {
+      "actual": 7,
+      "predicted": 6.53,
+      "residual": 0.47
+    },
+    {
+      "actual": 4,
+      "predicted": 5.4,
+      "residual": -1.4
+    },
+    {
+      "actual": 7,
+      "predicted": 6.36,
+      "residual": 0.64
+    },
+    {
+      "actual": 6,
+      "predicted": 5.55,
+      "residual": 0.45
+    },
+    {
+      "actual": 5,
+      "predicted": 5.0,
+      "residual": 0.0
+    },
+    {
+      "actual": 5,
+      "predicted": 5.27,
+      "residual": -0.27
+    },
+    {
+      "actual": 5,
+      "predicted": 5.24,
+      "residual": -0.24
+    },
+    {
+      "actual": 6,
+      "predicted": 5.41,
+      "residual": 0.59
+    },
+    {
+      "actual": 5,
+      "predicted": 5.11,
+      "residual": -0.11
+    },
+    {
+      "actual": 6,
+      "predicted": 5.93,
+      "residual": 0.07
+    },
+    {
+      "actual": 5,
+      "predicted": 4.59,
+      "residual": 0.41
+    },
+    {
+      "actual": 6,
+      "predicted": 5.5,
+      "residual": 0.5
+    },
+    {
+      "actual": 5,
+      "predicted": 5.08,
+      "residual": -0.08
+    },
+    {
+      "actual": 5,
+      "predicted": 5.02,
+      "residual": -0.02
+    },
+    {
+      "actual": 5,
+      "predicted": 5.8,
+      "residual": -0.8
+    },
+    {
+      "actual": 7,
+      "predicted": 6.43,
+      "residual": 0.57
+    },
+    {
+      "actual": 6,
+      "predicted": 5.54,
+      "residual": 0.46
+    },
+    {
+      "actual": 7,
+      "predicted": 6.69,
+      "residual": 0.31
+    },
+    {
+      "actual": 6,
+      "predicted": 5.86,
+      "residual": 0.14
+    },
+    {
+      "actual": 5,
+      "predicted": 5.2,
+      "residual": -0.2
+    },
+    {
+      "actual": 6,
+      "predicted": 5.41,
+      "residual": 0.59
+    },
+    {
+      "actual": 5,
+      "predicted": 5.22,
+      "residual": -0.22
+    },
+    {
+      "actual": 8,
+      "predicted": 6.48,
+      "residual": 1.52
+    },
+    {
+      "actual": 5,
+      "predicted": 5.02,
+      "residual": -0.02
+    },
+    {
+      "actual": 6,
+      "predicted": 6.4,
+      "residual": -0.4
+    },
+    {
+      "actual": 5,
+      "predicted": 5.02,
+      "residual": -0.02
+    },
+    {
+      "actual": 6,
+      "predicted": 5.23,
+      "residual": 0.77
+    },
+    {
+      "actual": 7,
+      "predicted": 6.17,
+      "residual": 0.83
+    },
+    {
+      "actual": 6,
+      "predicted": 5.33,
+      "residual": 0.67
+    },
+    {
+      "actual": 6,
+      "predicted": 5.27,
+      "residual": 0.73
+    },
+    {
+      "actual": 5,
+      "predicted": 5.1,
+      "residual": -0.1
+    },
+    {
+      "actual": 6,
+      "predicted": 5.89,
+      "residual": 0.11
+    },
+    {
+      "actual": 6,
+      "predicted": 6.14,
+      "residual": -0.14
+    },
+    {
+      "actual": 6,
+      "predicted": 5.76,
+      "residual": 0.24
+    },
+    {
+      "actual": 6,
+      "predicted": 5.78,
+      "residual": 0.22
+    },
+    {
+      "actual": 6,
+      "predicted": 5.36,
+      "residual": 0.64
+    },
+    {
+      "actual": 6,
+      "predicted": 5.74,
+      "residual": 0.26
+    },
+    {
+      "actual": 6,
+      "predicted": 5.29,
+      "residual": 0.71
+    },
+    {
+      "actual": 7,
+      "predicted": 6.39,
+      "residual": 0.61
+    },
+    {
+      "actual": 6,
+      "predicted": 5.51,
+      "residual": 0.49
+    },
+    {
+      "actual": 5,
+      "predicted": 5.19,
+      "residual": -0.19
+    },
+    {
+      "actual": 5,
+      "predicted": 5.6,
+      "residual": -0.6
+    },
+    {
+      "actual": 6,
+      "predicted": 5.86,
+      "residual": 0.14
+    },
+    {
+      "actual": 5,
+      "predicted": 5.35,
+      "residual": -0.35
+    },
+    {
+      "actual": 5,
+      "predicted": 5.03,
+      "residual": -0.03
+    },
+    {
+      "actual": 5,
+      "predicted": 6.32,
+      "residual": -1.32
+    },
+    {
+      "actual": 6,
+      "predicted": 5.76,
+      "residual": 0.24
+    },
+    {
+      "actual": 5,
+      "predicted": 5.06,
+      "residual": -0.06
+    },
+    {
+      "actual": 5,
+      "predicted": 4.87,
+      "residual": 0.13
+    },
+    {
+      "actual": 5,
+      "predicted": 5.38,
+      "residual": -0.38
+    },
+    {
+      "actual": 5,
+      "predicted": 5.16,
+      "residual": -0.16
+    },
+    {
+      "actual": 6,
+      "predicted": 5.92,
+      "residual": 0.08
+    },
+    {
+      "actual": 7,
+      "predicted": 6.61,
+      "residual": 0.39
+    },
+    {
+      "actual": 6,
+      "predicted": 6.25,
+      "residual": -0.25
+    },
+    {
+      "actual": 8,
+      "predicted": 6.48,
+      "residual": 1.52
+    },
+    {
+      "actual": 5,
+      "predicted": 5.38,
+      "residual": -0.38
+    },
+    {
+      "actual": 5,
+      "predicted": 5.52,
+      "residual": -0.52
+    },
+    {
+      "actual": 5,
+      "predicted": 5.11,
+      "residual": -0.11
+    },
+    {
+      "actual": 6,
+      "predicted": 5.52,
+      "residual": 0.48
+    },
+    {
+      "actual": 6,
+      "predicted": 5.58,
+      "residual": 0.42
+    },
+    {
+      "actual": 6,
+      "predicted": 5.6,
+      "residual": 0.4
+    },
+    {
+      "actual": 5,
+      "predicted": 5.08,
+      "residual": -0.08
+    },
+    {
+      "actual": 6,
+      "predicted": 5.86,
+      "residual": 0.14
+    },
+    {
+      "actual": 7,
+      "predicted": 6.24,
+      "residual": 0.76
+    },
+    {
+      "actual": 6,
+      "predicted": 5.36,
+      "residual": 0.64
+    },
+    {
+      "actual": 5,
+      "predicted": 5.16,
+      "residual": -0.16
+    },
+    {
+      "actual": 6,
+      "predicted": 5.86,
+      "residual": 0.14
+    },
+    {
+      "actual": 5,
+      "predicted": 5.4,
+      "residual": -0.4
+    },
+    {
+      "actual": 5,
+      "predicted": 5.54,
+      "residual": -0.54
+    },
+    {
+      "actual": 6,
+      "predicted": 6.52,
+      "residual": -0.52
+    },
+    {
+      "actual": 6,
+      "predicted": 5.2,
+      "residual": 0.8
+    },
+    {
+      "actual": 6,
+      "predicted": 5.91,
+      "residual": 0.09
+    },
+    {
+      "actual": 7,
+      "predicted": 5.98,
+      "residual": 1.02
+    },
+    {
+      "actual": 5,
+      "predicted": 5.6,
+      "residual": -0.6
+    },
+    {
+      "actual": 7,
+      "predicted": 6.39,
+      "residual": 0.61
+    },
+    {
+      "actual": 5,
+      "predicted": 5.09,
+      "residual": -0.09
+    },
+    {
+      "actual": 5,
+      "predicted": 5.36,
+      "residual": -0.36
+    },
+    {
+      "actual": 5,
+      "predicted": 5.7,
+      "residual": -0.7
+    },
+    {
+      "actual": 6,
+      "predicted": 5.47,
+      "residual": 0.53
+    },
+    {
+      "actual": 6,
+      "predicted": 5.03,
+      "residual": 0.97
+    },
+    {
+      "actual": 5,
+      "predicted": 4.72,
+      "residual": 0.28
+    },
+    {
+      "actual": 5,
+      "predicted": 5.18,
+      "residual": -0.18
+    },
+    {
+      "actual": 6,
+      "predicted": 5.08,
+      "residual": 0.92
+    },
+    {
+      "actual": 5,
+      "predicted": 4.94,
+      "residual": 0.06
+    },
+    {
+      "actual": 7,
+      "predicted": 6.49,
+      "residual": 0.51
+    },
+    {
+      "actual": 6,
+      "predicted": 5.34,
+      "residual": 0.66
+    },
+    {
+      "actual": 7,
+      "predicted": 6.51,
+      "residual": 0.49
+    },
+    {
+      "actual": 6,
+      "predicted": 5.89,
+      "residual": 0.11
+    },
+    {
+      "actual": 6,
+      "predicted": 6.18,
+      "residual": -0.18
+    },
+    {
+      "actual": 5,
+      "predicted": 5.08,
+      "residual": -0.08
+    },
+    {
+      "actual": 5,
+      "predicted": 5.4,
+      "residual": -0.4
+    },
+    {
+      "actual": 6,
+      "predicted": 5.03,
+      "residual": 0.97
+    },
+    {
+      "actual": 4,
+      "predicted": 4.52,
+      "residual": -0.52
+    },
+    {
+      "actual": 6,
+      "predicted": 5.86,
+      "residual": 0.14
+    },
+    {
+      "actual": 5,
+      "predicted": 5.44,
+      "residual": -0.44
+    },
+    {
+      "actual": 7,
+      "predicted": 6.25,
+      "residual": 0.75
+    },
+    {
+      "actual": 5,
+      "predicted": 5.13,
+      "residual": -0.13
+    },
+    {
+      "actual": 5,
+      "predicted": 6.52,
+      "residual": -1.52
+    },
+    {
+      "actual": 4,
+      "predicted": 5.68,
+      "residual": -1.68
+    },
+    {
+      "actual": 5,
+      "predicted": 5.89,
+      "residual": -0.89
+    },
+    {
+      "actual": 7,
+      "predicted": 6.7,
+      "residual": 0.3
+    },
+    {
+      "actual": 6,
+      "predicted": 5.34,
+      "residual": 0.66
+    },
+    {
+      "actual": 5,
+      "predicted": 5.57,
+      "residual": -0.57
+    },
+    {
+      "actual": 6,
+      "predicted": 6.03,
+      "residual": -0.03
+    },
+    {
+      "actual": 6,
+      "predicted": 5.12,
+      "residual": 0.88
+    },
+    {
+      "actual": 7,
+      "predicted": 6.32,
+      "residual": 0.68
+    },
+    {
+      "actual": 6,
+      "predicted": 5.72,
+      "residual": 0.28
+    },
+    {
+      "actual": 5,
+      "predicted": 5.03,
+      "residual": -0.03
+    },
+    {
+      "actual": 5,
+      "predicted": 4.58,
+      "residual": 0.42
+    },
+    {
+      "actual": 6,
+      "predicted": 5.82,
+      "residual": 0.18
+    },
+    {
+      "actual": 5,
+      "predicted": 5.29,
+      "residual": -0.29
+    },
+    {
+      "actual": 7,
+      "predicted": 6.69,
+      "residual": 0.31
+    },
+    {
+      "actual": 5,
+      "predicted": 5.18,
+      "residual": -0.18
+    },
+    {
+      "actual": 6,
+      "predicted": 5.33,
+      "residual": 0.67
+    },
+    {
+      "actual": 6,
+      "predicted": 5.39,
+      "residual": 0.61
+    },
+    {
+      "actual": 5,
+      "predicted": 5.11,
+      "residual": -0.11
+    },
+    {
+      "actual": 7,
+      "predicted": 6.64,
+      "residual": 0.36
+    },
+    {
+      "actual": 5,
+      "predicted": 5.44,
+      "residual": -0.44
+    },
+    {
+      "actual": 5,
+      "predicted": 5.02,
+      "residual": -0.02
+    },
+    {
+      "actual": 5,
+      "predicted": 4.82,
+      "residual": 0.18
+    },
+    {
+      "actual": 6,
+      "predicted": 5.84,
+      "residual": 0.16
+    },
+    {
+      "actual": 7,
+      "predicted": 6.08,
+      "residual": 0.92
+    },
+    {
+      "actual": 7,
+      "predicted": 7.36,
+      "residual": -0.36
+    },
+    {
+      "actual": 5,
+      "predicted": 5.03,
+      "residual": -0.03
+    },
+    {
+      "actual": 5,
+      "predicted": 5.25,
+      "residual": -0.25
+    },
+    {
+      "actual": 6,
+      "predicted": 6.72,
+      "residual": -0.72
+    },
+    {
+      "actual": 6,
+      "predicted": 6.2,
+      "residual": -0.2
+    },
+    {
+      "actual": 7,
+      "predicted": 5.8,
+      "residual": 1.2
+    },
+    {
+      "actual": 6,
+      "predicted": 5.72,
+      "residual": 0.28
+    },
+    {
+      "actual": 5,
+      "predicted": 4.97,
+      "residual": 0.03
+    },
+    {
+      "actual": 6,
+      "predicted": 5.95,
+      "residual": 0.05
+    },
+    {
+      "actual": 6,
+      "predicted": 5.67,
+      "residual": 0.33
+    },
+    {
+      "actual": 6,
+      "predicted": 5.63,
+      "residual": 0.37
+    },
+    {
+      "actual": 6,
+      "predicted": 6.18,
+      "residual": -0.18
+    },
+    {
+      "actual": 6,
+      "predicted": 6.14,
+      "residual": -0.14
+    },
+    {
+      "actual": 7,
+      "predicted": 6.11,
+      "residual": 0.89
+    },
+    {
+      "actual": 4,
+      "predicted": 4.82,
+      "residual": -0.82
+    },
+    {
+      "actual": 5,
+      "predicted": 4.93,
+      "residual": 0.07
+    },
+    {
+      "actual": 5,
+      "predicted": 5.2,
+      "residual": -0.2
+    },
+    {
+      "actual": 7,
+      "predicted": 6.99,
+      "residual": 0.01
+    },
+    {
+      "actual": 5,
+      "predicted": 5.35,
+      "residual": -0.35
+    },
+    {
+      "actual": 5,
+      "predicted": 5.42,
+      "residual": -0.42
+    },
+    {
+      "actual": 5,
+      "predicted": 5.26,
+      "residual": -0.26
+    },
+    {
+      "actual": 5,
+      "predicted": 4.75,
+      "residual": 0.25
+    },
+    {
+      "actual": 6,
+      "predicted": 6.53,
+      "residual": -0.53
+    },
+    {
+      "actual": 6,
+      "predicted": 6.04,
+      "residual": -0.04
+    },
+    {
+      "actual": 5,
+      "predicted": 5.17,
+      "residual": -0.17
+    },
+    {
+      "actual": 7,
+      "predicted": 6.69,
+      "residual": 0.31
+    },
+    {
+      "actual": 5,
+      "predicted": 5.02,
+      "residual": -0.02
+    },
+    {
+      "actual": 6,
+      "predicted": 5.79,
+      "residual": 0.21
+    },
+    {
+      "actual": 6,
+      "predicted": 5.82,
+      "residual": 0.18
+    },
+    {
+      "actual": 6,
+      "predicted": 5.03,
+      "residual": 0.97
+    },
+    {
+      "actual": 5,
+      "predicted": 5.47,
+      "residual": -0.47
+    },
+    {
+      "actual": 4,
+      "predicted": 5.02,
+      "residual": -1.02
+    },
+    {
+      "actual": 6,
+      "predicted": 5.76,
+      "residual": 0.24
+    },
+    {
+      "actual": 7,
+      "predicted": 6.65,
+      "residual": 0.35
+    },
+    {
+      "actual": 6,
+      "predicted": 5.45,
+      "residual": 0.55
+    },
+    {
+      "actual": 7,
+      "predicted": 6.49,
+      "residual": 0.51
+    },
+    {
+      "actual": 5,
+      "predicted": 5.76,
+      "residual": -0.76
+    },
+    {
+      "actual": 6,
+      "predicted": 5.6,
+      "residual": 0.4
+    },
+    {
+      "actual": 6,
+      "predicted": 6.5,
+      "residual": -0.5
+    },
+    {
+      "actual": 5,
+      "predicted": 5.03,
+      "residual": -0.03
+    },
+    {
+      "actual": 5,
+      "predicted": 5.86,
+      "residual": -0.86
+    },
+    {
+      "actual": 6,
+      "predicted": 5.44,
+      "residual": 0.56
+    },
+    {
+      "actual": 5,
+      "predicted": 5.48,
+      "residual": -0.48
+    },
+    {
+      "actual": 6,
+      "predicted": 5.72,
+      "residual": 0.28
+    },
+    {
+      "actual": 4,
+      "predicted": 4.96,
+      "residual": -0.96
+    },
+    {
+      "actual": 5,
+      "predicted": 5.27,
+      "residual": -0.27
+    },
+    {
+      "actual": 6,
+      "predicted": 5.46,
+      "residual": 0.54
+    },
+    {
+      "actual": 6,
+      "predicted": 5.25,
+      "residual": 0.75
+    },
+    {
+      "actual": 5,
+      "predicted": 5.63,
+      "residual": -0.63
+    },
+    {
+      "actual": 6,
+      "predicted": 6.31,
+      "residual": -0.31
+    },
+    {
+      "actual": 6,
+      "predicted": 6.53,
+      "residual": -0.53
+    },
+    {
+      "actual": 5,
+      "predicted": 5.61,
+      "residual": -0.61
+    },
+    {
+      "actual": 5,
+      "predicted": 5.08,
+      "residual": -0.08
+    },
+    {
+      "actual": 6,
+      "predicted": 6.24,
+      "residual": -0.24
+    },
+    {
+      "actual": 7,
+      "predicted": 5.81,
+      "residual": 1.19
+    },
+    {
+      "actual": 7,
+      "predicted": 6.4,
+      "residual": 0.6
+    },
+    {
+      "actual": 6,
+      "predicted": 5.51,
+      "residual": 0.49
+    },
+    {
+      "actual": 5,
+      "predicted": 5.32,
+      "residual": -0.32
+    },
+    {
+      "actual": 6,
+      "predicted": 5.98,
+      "residual": 0.02
+    },
+    {
+      "actual": 6,
+      "predicted": 6.23,
+      "residual": -0.23
+    },
+    {
+      "actual": 5,
+      "predicted": 5.07,
+      "residual": -0.07
+    },
+    {
+      "actual": 6,
+      "predicted": 5.89,
+      "residual": 0.11
+    },
+    {
+      "actual": 5,
+      "predicted": 5.37,
+      "residual": -0.37
+    },
+    {
+      "actual": 6,
+      "predicted": 5.75,
+      "residual": 0.25
+    },
+    {
+      "actual": 5,
+      "predicted": 5.71,
+      "residual": -0.71
+    },
+    {
+      "actual": 5,
+      "predicted": 5.33,
+      "residual": -0.33
+    },
+    {
+      "actual": 5,
+      "predicted": 5.59,
+      "residual": -0.59
+    },
+    {
+      "actual": 6,
+      "predicted": 6.77,
+      "residual": -0.77
+    },
+    {
+      "actual": 6,
+      "predicted": 6.41,
+      "residual": -0.41
+    },
+    {
+      "actual": 6,
+      "predicted": 5.95,
+      "residual": 0.05
+    },
+    {
+      "actual": 7,
+      "predicted": 6.93,
+      "residual": 0.07
+    },
+    {
+      "actual": 5,
+      "predicted": 5.07,
+      "residual": -0.07
+    },
+    {
+      "actual": 5,
+      "predicted": 5.54,
+      "residual": -0.54
+    },
+    {
+      "actual": 6,
+      "predicted": 5.45,
+      "residual": 0.55
+    },
+    {
+      "actual": 5,
+      "predicted": 5.51,
+      "residual": -0.51
+    },
+    {
+      "actual": 7,
+      "predicted": 6.46,
+      "residual": 0.54
+    },
+    {
+      "actual": 5,
+      "predicted": 5.02,
+      "residual": -0.02
+    },
+    {
+      "actual": 6,
+      "predicted": 6.25,
+      "residual": -0.25
+    },
+    {
+      "actual": 4,
+      "predicted": 5.41,
+      "residual": -1.41
+    },
+    {
+      "actual": 6,
+      "predicted": 5.93,
+      "residual": 0.07
+    },
+    {
+      "actual": 6,
+      "predicted": 5.39,
+      "residual": 0.61
+    },
+    {
+      "actual": 8,
+      "predicted": 6.94,
+      "residual": 1.06
+    },
+    {
+      "actual": 6,
+      "predicted": 6.41,
+      "residual": -0.41
+    },
+    {
+      "actual": 5,
+      "predicted": 5.29,
+      "residual": -0.29
+    },
+    {
+      "actual": 5,
+      "predicted": 5.11,
+      "residual": -0.11
+    },
+    {
+      "actual": 6,
+      "predicted": 6.29,
+      "residual": -0.29
+    },
+    {
+      "actual": 5,
+      "predicted": 5.33,
+      "residual": -0.33
+    },
+    {
+      "actual": 7,
+      "predicted": 6.71,
+      "residual": 0.29
+    },
+    {
+      "actual": 6,
+      "predicted": 6.26,
+      "residual": -0.26
+    },
+    {
+      "actual": 6,
+      "predicted": 6.11,
+      "residual": -0.11
+    },
+    {
+      "actual": 5,
+      "predicted": 5.03,
+      "residual": -0.03
+    },
+    {
+      "actual": 5,
+      "predicted": 5.07,
+      "residual": -0.07
+    },
+    {
+      "actual": 7,
+      "predicted": 6.16,
+      "residual": 0.84
+    },
+    {
+      "actual": 6,
+      "predicted": 5.36,
+      "residual": 0.64
+    },
+    {
+      "actual": 6,
+      "predicted": 5.87,
+      "residual": 0.13
+    },
+    {
+      "actual": 5,
+      "predicted": 5.2,
+      "residual": -0.2
+    },
+    {
+      "actual": 6,
+      "predicted": 6.11,
+      "residual": -0.11
+    },
+    {
+      "actual": 6,
+      "predicted": 5.9,
+      "residual": 0.1
+    },
+    {
+      "actual": 5,
+      "predicted": 5.68,
+      "residual": -0.68
+    },
+    {
+      "actual": 7,
+      "predicted": 6.91,
+      "residual": 0.09
+    },
+    {
+      "actual": 6,
+      "predicted": 5.49,
+      "residual": 0.51
+    },
+    {
+      "actual": 6,
+      "predicted": 5.36,
+      "residual": 0.64
+    },
+    {
+      "actual": 6,
+      "predicted": 5.56,
+      "residual": 0.44
+    },
+    {
+      "actual": 6,
+      "predicted": 5.59,
+      "residual": 0.41
+    },
+    {
+      "actual": 5,
+      "predicted": 5.56,
+      "residual": -0.56
+    },
+    {
+      "actual": 6,
+      "predicted": 5.91,
+      "residual": 0.09
+    },
+    {
+      "actual": 5,
+      "predicted": 4.96,
+      "residual": 0.04
+    },
+    {
+      "actual": 5,
+      "predicted": 5.09,
+      "residual": -0.09
+    },
+    {
+      "actual": 6,
+      "predicted": 6.36,
+      "residual": -0.36
+    },
+    {
+      "actual": 4,
+      "predicted": 5.07,
+      "residual": -1.07
+    }
+  ]
+}
